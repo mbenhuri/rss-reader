@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Reader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+
+    <header class="topbar">
+      <button class="icon-btn" id="menuToggle" aria-label="Toggle feed list">☰</button>
+      <h1 class="wordmark">Reader</h1>
+      <div class="search">
+        <input type="search" id="searchInput" placeholder="Search  /" autocomplete="off" />
+      </div>
+      <div class="topbar-actions">
+        <button class="btn" id="refreshBtn" title="Check feeds now (r)">↻ Refresh</button>
+        <button class="btn" id="settingsBtn" title="Settings">⚙</button>
+      </div>
+    </header>
+
+    <div class="layout">
+
+      <!-- FOLDERS / FEEDS -->
+      <nav class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+          <button class="nav-item is-active" data-view="all">
+            <span class="nav-label">All items</span>
+            <span class="count" id="countAll">0</span>
+          </button>
+          <button class="nav-item" data-view="starred">
+            <span class="nav-label">★ Starred</span>
+            <span class="count" id="countStarred">0</span>
+          </button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span>Feeds</span>
+            <button class="text-btn" id="addFolderBtn" title="New folder">+ folder</button>
+          </div>
+          <div id="feedTree"></div>
+        </div>
+
+        <div class="sidebar-section sidebar-add">
+          <input type="url" id="newFeedUrl" placeholder="Feed URL…" />
+          <button class="btn btn-accent" id="addFeedBtn">Add</button>
+        </div>
+
+        <div class="sidebar-section sidebar-io">
+          <a class="text-btn" href="/api/opml" download>Export OPML</a>
+          <label class="text-btn file-label">
+            Import OPML
+            <input type="file" id="opmlFile" accept=".opml,.xml" hidden />
+          </label>
+        </div>
+      </nav>
+
+      <!-- ITEM LIST -->
+      <section class="item-list" id="itemList">
+        <div class="item-list-header">
+          <span id="listTitle">All items</span>
+          <button class="text-btn" id="markAllReadBtn">Mark all read</button>
+        </div>
+        <div class="items" id="items"></div>
+        <div class="empty-state" id="itemsEmpty" hidden>Nothing here. You're caught up.</div>
+      </section>
+
+      <!-- READING PANE -->
+      <article class="reading-pane" id="readingPane">
+        <div class="reading-empty" id="readingEmpty">Select an article to read it here.</div>
+        <div class="reading-content" id="readingContent" hidden>
+          <button class="icon-btn back-btn" id="backBtn" aria-label="Back to list">←</button>
+          <div class="reading-meta">
+            <span id="readingFeed"></span> · <span id="readingDate"></span>
+          </div>
+          <h2 id="readingTitle"></h2>
+          <div class="reading-actions">
+            <button class="text-btn" id="toggleStarBtn">☆ Star (s)</button>
+            <button class="text-btn" id="toggleReadBtn">Mark unread (m)</button>
+            <a class="text-btn" id="openOriginalLink" target="_blank" rel="noopener">Open original ↗ (v)</a>
+          </div>
+          <div class="reading-body" id="readingBody"></div>
+        </div>
+      </article>
+
+    </div>
+
+    <footer class="statusline" id="statusline">
+      <span><kbd>j</kbd>/<kbd>k</kbd> navigate</span>
+      <span><kbd>m</kbd> read/unread</span>
+      <span><kbd>s</kbd> star</span>
+      <span><kbd>v</kbd> open original</span>
+      <span><kbd>r</kbd> refresh</span>
+      <span><kbd>/</kbd> search</span>
+      <span class="status-msg" id="statusMsg"></span>
+    </footer>
+  </div>
+
+  <!-- Settings modal -->
+  <dialog id="settingsModal">
+    <form method="dialog" class="settings-form">
+      <h3>Settings</h3>
+      <label>
+        Poller worker refresh URL
+        <input type="url" id="workerUrl" placeholder="https://rss-reader-poller.yourname.workers.dev/refresh" />
+      </label>
+      <label>
+        Refresh secret (optional)
+        <input type="password" id="workerSecret" placeholder="Only if you set REFRESH_SECRET" />
+      </label>
+      <p class="settings-hint">Used by the ↻ Refresh button to trigger the poller worker immediately, instead of waiting for its schedule.</p>
+      <div class="settings-buttons">
+        <button value="cancel" class="text-btn">Cancel</button>
+        <button value="save" class="btn btn-accent" id="saveSettingsBtn">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- New folder modal -->
+  <dialog id="folderModal">
+    <form method="dialog" class="settings-form">
+      <h3>New folder</h3>
+      <label>
+        Name
+        <input type="text" id="newFolderName" placeholder="e.g. Design" />
+      </label>
+      <div class="settings-buttons">
+        <button value="cancel" class="text-btn">Cancel</button>
+        <button value="save" class="btn btn-accent" id="saveFolderBtn">Create</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+name = "rss-reader-poller"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# Runs every 30 minutes. Adjust to taste — e.g. "*/15 * * * *" for every 15 min.
+[triggers]
+crons = ["*/30 * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rss-reader"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# Optional: set with `wrangler secret put REFRESH_SECRET` to protect the
+# manual POST /refresh endpoint. If unset, /refresh is open to anyone who
+# knows the worker's URL — fine for a workers.dev URL you keep private,
+# but set this if you want a real lock on it.
