@@ -13,7 +13,7 @@
 // get a stale node. If you add anything expensive to a row, revisit that.
 //
 // Reading order: state → api() → data loading → sidebar → item list → reading
-// pane → actions → keyboard → event wiring → utilities → init at the bottom.
+// pane → actions → keyboard → event wiring → theming → utilities → init.
 (() => {
   // Terse aliases used throughout — $ is one element, $$ is a real Array
   // (querySelectorAll returns a NodeList, which has no .map/.filter).
@@ -591,6 +591,7 @@
   });
 
   $('#settingsBtn').addEventListener('click', () => {
+    renderThemeSelect();
     $('#workerUrl').value = localStorage.getItem('rss_worker_url') || '';
     $('#workerSecret').value = localStorage.getItem('rss_worker_secret') || '';
     $('#settingsModal').showModal();
@@ -623,6 +624,294 @@
   $('#opmlFile').addEventListener('change', (e) => {
     if (e.target.files[0]) importOpml(e.target.files[0]);
     e.target.value = '';
+  });
+
+  // ---------- Theming ----------
+
+  // Themes are token maps; the registry, validation and the actual applying
+  // live in themes.js (loaded from <head> so the stored theme is on screen
+  // before first paint). Everything here is UI: the picker in Settings and
+  // the designer dialog.
+  //
+  // Storage is localStorage, like the worker settings — themes are a per-
+  // browser preference, and there is no user table to hang them off.
+  const T = globalThis.Themes;
+
+  // Recomputed rather than cached: the custom list changes underneath us on
+  // save, delete and import, and a stale copy is how you get a theme that
+  // reappears after being deleted.
+  function themeList() {
+    return T.allThemes(T.loadCustomThemes(localStorage));
+  }
+
+  function activeThemeId() {
+    return localStorage.getItem(T.ACTIVE_KEY) || T.PAPER.id;
+  }
+
+  function activeTheme() {
+    return T.findTheme(themeList(), activeThemeId()) || T.PAPER;
+  }
+
+  // Apply without persisting — used for live preview while the designer is
+  // open, so cancelling can put the old theme back.
+  function previewTheme(theme) {
+    T.applyTheme(theme, document);
+  }
+
+  function useTheme(theme) {
+    localStorage.setItem(T.ACTIVE_KEY, theme.id);
+    T.applyTheme(theme, document);
+    renderThemeSelect();
+  }
+
+  function renderThemeSelect() {
+    const sel = $('#themeSelect');
+    const current = activeThemeId();
+    sel.innerHTML = '';
+    for (const theme of themeList()) {
+      const opt = document.createElement('option');
+      opt.value = theme.id;
+      opt.textContent = theme.name;
+      opt.selected = theme.id === current;
+      sel.appendChild(opt);
+    }
+  }
+
+  // ---------- Theme designer ----------
+
+  // The theme the designer is editing, and the one to restore on cancel.
+  let draft = null;
+  let themeBeforeEdit = null;
+
+  function slugify(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 32);
+  }
+
+  // Build the token rows from the registry, so a token added to
+  // Themes.TOKENS becomes editable here with no change to this file.
+  function renderThemeTokens(tokens) {
+    const box = $('#themeTokens');
+    box.innerHTML = '';
+    let group = null;
+    for (const token of T.TOKENS) {
+      if (token.group !== group) {
+        group = token.group;
+        const h = document.createElement('div');
+        h.className = 'theme-group';
+        h.textContent = group;
+        box.appendChild(h);
+      }
+      box.appendChild(tokenRow(token, tokens[token.name]));
+    }
+  }
+
+  function tokenRow(token, value) {
+    const wrap = document.createElement('label');
+    wrap.className = 'theme-token';
+    wrap.append(token.label);
+
+    const inputs = document.createElement('div');
+    inputs.className = 'theme-token-inputs';
+
+    const text = document.createElement('input');
+    text.type = 'text';
+    text.value = value;
+    text.dataset.token = token.name;
+
+    // Colours also get a native picker. It only speaks 6-digit hex, so it is
+    // driven from the text field one way and writes back the other; a token
+    // holding rgb()/hsl() simply leaves the swatch showing its fallback.
+    let swatch = null;
+    if (token.type === 'color') {
+      swatch = document.createElement('input');
+      swatch.type = 'color';
+      swatch.setAttribute('aria-label', `${token.label} colour picker`);
+      if (/^#[0-9a-f]{6}$/i.test(value)) swatch.value = value;
+      swatch.addEventListener('input', () => {
+        text.value = swatch.value;
+        onTokenInput(token, text, swatch);
+      });
+      inputs.appendChild(swatch);
+    }
+
+    text.addEventListener('input', () => onTokenInput(token, text, swatch));
+    inputs.appendChild(text);
+    wrap.appendChild(inputs);
+    return wrap;
+  }
+
+  // Every keystroke re-validates that one token and, if it is valid, repaints
+  // the app underneath the dialog. Invalid values are marked and left out of
+  // the draft rather than blocking typing — half-typed hex is invalid for a
+  // moment on the way to being valid.
+  function onTokenInput(token, text, swatch) {
+    const value = text.value.trim();
+    const ok = T.isValidValue(token.name, value);
+    text.classList.toggle('is-invalid', !ok);
+    if (!ok) return;
+    if (swatch && /^#[0-9a-f]{6}$/i.test(value)) swatch.value = value;
+    draft.tokens[token.name] = value;
+    previewTheme(draft);
+  }
+
+  // `base` is the theme to start from. Editing keeps its id (saving a
+  // built-in's id overrides that built-in — see allThemes in themes.js);
+  // duplicating clears the name, and the id is derived from whatever name is
+  // typed instead.
+  function openThemeDesigner(base, { duplicate = false } = {}) {
+    themeBeforeEdit = activeTheme();
+    draft = {
+      id: duplicate ? '' : base.id,
+      name: duplicate ? '' : base.name,
+      dark: base.dark,
+      fontImport: base.fontImport || null,
+      tokens: T.resolveTokens(base),
+    };
+
+    $('#themeModalTitle').textContent = duplicate ? 'New theme' : `Edit ${base.name}`;
+    $('#themeName').value = draft.name;
+    $('#themeDark').checked = draft.dark;
+    $('#themeFontImport').value = draft.fontImport || '';
+    $('#themeError').textContent = '';
+    // Deleting a built-in is meaningless — they come from the source file.
+    $('#deleteThemeBtn').hidden = duplicate || T.BUILTIN.some((t) => t.id === base.id);
+    renderThemeTokens(draft.tokens);
+    previewTheme(draft);
+    $('#themeModal').showModal();
+  }
+
+  // Assemble the draft into a theme object and run it through the same
+  // validator an imported file gets. The designer's per-field checks are a
+  // convenience; this is the boundary that actually decides.
+  function saveDraft() {
+    const name = $('#themeName').value.trim();
+    if (!name) return { error: 'Give the theme a name' };
+
+    // A renamed theme becomes a new one rather than overwriting what it was
+    // duplicated from — otherwise "duplicate and tweak" would quietly destroy
+    // the original.
+    const original = T.findTheme(themeList(), draft.id);
+    const id = (draft.id && original && original.name === name) ? draft.id : slugify(name);
+    if (!id) return { error: 'Name must contain a letter or digit' };
+
+    const { theme, errors } = T.validateTheme({
+      id,
+      name,
+      dark: $('#themeDark').checked,
+      fontImport: $('#themeFontImport').value.trim() || null,
+      tokens: draft.tokens,
+    });
+    if (!theme) return { error: errors[0] || 'Theme is not valid' };
+    if (errors.length) return { error: errors[0] };
+
+    const custom = T.loadCustomThemes(localStorage).filter((t) => t.id !== theme.id);
+    custom.push(theme);
+    T.saveCustomThemes(localStorage, custom);
+    return { theme };
+  }
+
+  function deleteTheme(id) {
+    T.saveCustomThemes(localStorage, T.loadCustomThemes(localStorage).filter((t) => t.id !== id));
+    // If the deleted theme was showing, fall back rather than leaving the
+    // page painted with a theme that no longer exists.
+    if (activeThemeId() === id) useTheme(T.PAPER);
+    else renderThemeSelect();
+  }
+
+  // Import is the "designer by file" half of theming: a JSON file with the
+  // same shape Export writes. Errors are reported in full rather than as a
+  // generic failure — a hand-edited theme file is exactly the case where
+  // knowing which token was rejected matters.
+  async function importTheme(file) {
+    let parsed;
+    try {
+      parsed = JSON.parse(await file.text());
+    } catch {
+      say('Theme file is not valid JSON');
+      return;
+    }
+    const { theme, errors } = T.validateTheme(parsed);
+    if (!theme) {
+      say(`Theme rejected — ${errors[0] || 'unrecognised format'}`);
+      return;
+    }
+    const custom = T.loadCustomThemes(localStorage).filter((t) => t.id !== theme.id);
+    custom.push(theme);
+    T.saveCustomThemes(localStorage, custom);
+    useTheme(theme);
+    say(errors.length ? `Imported "${theme.name}" — ${errors.length} token(s) ignored` : `Theme "${theme.name}" applied`);
+  }
+
+  function exportTheme(theme) {
+    const blob = new Blob([JSON.stringify(theme, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${theme.id || 'theme'}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ---------- Theme wiring ----------
+
+  // Switching applies immediately — a theme is something you judge by looking
+  // at it, so there is no separate confirm step.
+  $('#themeSelect').addEventListener('change', (e) => {
+    const theme = T.findTheme(themeList(), e.target.value);
+    if (theme) useTheme(theme);
+  });
+
+  $('#editThemeBtn').addEventListener('click', () => openThemeDesigner(activeTheme()));
+  $('#newThemeBtn').addEventListener('click', () => openThemeDesigner(activeTheme(), { duplicate: true }));
+
+  $('#themeFile').addEventListener('change', (e) => {
+    if (e.target.files[0]) importTheme(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // The dark flag and the font import are the two draft fields not owned by
+  // a token row, so they update the draft themselves.
+  $('#themeDark').addEventListener('change', (e) => {
+    draft.dark = e.target.checked;
+    previewTheme(draft);
+  });
+  $('#themeFontImport').addEventListener('input', (e) => {
+    const v = e.target.value.trim();
+    const ok = !v || T.isFontImport(v);
+    e.target.classList.toggle('is-invalid', !ok);
+    $('#themeError').textContent = ok ? '' : `Must start with ${T.FONT_IMPORT_PREFIX}`;
+    if (!ok) return;
+    draft.fontImport = v || null;
+    previewTheme(draft);
+  });
+
+  $('#exportThemeBtn').addEventListener('click', () => {
+    exportTheme({ ...draft, id: draft.id || slugify($('#themeName').value.trim()) || 'theme', name: $('#themeName').value.trim() || 'Untitled' });
+  });
+
+  $('#deleteThemeBtn').addEventListener('click', () => {
+    const id = draft.id;
+    $('#themeModal').close('deleted');
+    deleteTheme(id);
+    say('Theme deleted');
+  });
+
+  // Same <dialog method="dialog"> pattern as the other two modals. Note the
+  // cancel path has to undo the live preview, which has been repainting the
+  // app on every keystroke.
+  $('#themeModal').addEventListener('close', (e) => {
+    if (e.target.returnValue === 'save') {
+      const { theme, error } = saveDraft();
+      if (error) {
+        $('#themeError').textContent = error;
+        $('#themeModal').showModal();
+        return;
+      }
+      useTheme(theme);
+      say(`Theme "${theme.name}" saved`);
+    } else if (e.target.returnValue !== 'deleted') {
+      previewTheme(themeBeforeEdit);
+    }
+    draft = null;
   });
 
   // ---------- Utilities ----------
@@ -699,5 +988,6 @@
   // Boot. The most common failure by far is the D1 binding being missing or
   // misnamed on the Pages project (see CLAUDE.md), which makes every /api/*
   // call fail at once — hence the specific hint in this message.
+  renderThemeSelect();
   loadAll().catch(() => say('Could not load — check that the D1 binding is configured'));
 })();

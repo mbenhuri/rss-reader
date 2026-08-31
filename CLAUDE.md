@@ -11,8 +11,9 @@ Two separately-deployed pieces sharing one D1 database:
   vanilla JS/HTML/CSS, no bundler) plus Pages Functions (`pages/functions/`)
   that serve `/api/*`. Deployed via the Git integration (push to `main` →
   auto-deploys). Inside `public/`: `app.js` is the whole UI, `sanitize.js`
-  holds the URL-scheme rules and **must load before it**, and `_headers`
-  carries the Content-Security-Policy. Tests live in `pages/test/` — outside
+  holds the URL-scheme rules and **must load before it**, `themes.js` holds
+  the theme registry and loads from `<head>` (before first paint), and
+  `_headers` carries the Content-Security-Policy. Tests live in `pages/test/` — outside
   the build output directory, so they are not deployed.
 - **`worker/`** — standalone Cloudflare Worker with a Cron Trigger. Polls
   every subscribed feed on a schedule, parses RSS/Atom/RDF, writes new
@@ -49,7 +50,7 @@ git push origin main
 
 # Tests — no framework, nothing to install beyond the worker's deps
 cd worker && npm test    # feed parser, date normalising
-cd pages  && npm test    # URL-scheme rules
+cd pages  && npm test    # URL-scheme rules, theme validation
 
 # Inspect the live database
 cd worker && wrangler d1 execute rss-reader --remote \
@@ -61,8 +62,8 @@ dev` config committed), so browser behaviour — CSP effects, layout, whether
 a control actually reads as responsive — is verified by deploying and
 watching the Network/Console tabs.
 
-The tests cover pure logic only: parsing feed XML, normalising dates, and
-deciding which URL schemes are safe. That is deliberate. Configuration
+The tests cover pure logic only: parsing feed XML, normalising dates,
+deciding which URL schemes are safe, and validating theme token values. That is deliberate. Configuration
 errors, CSP effects and query performance are not reachable from a unit
 test, and roughly a third of the bugs found in this codebase were of that
 kind — see the README's "What is tested, and what isn't".
@@ -97,6 +98,26 @@ kind — see the README's "What is tested, and what isn't".
 - **Pages build settings for this monorepo:** Framework preset `None`,
   Build command empty, Build output directory `public`, Root directory
   `pages`. Functions are auto-detected relative to that root directory.
+- **Themes are token maps, and the CSS must stay token-only.** Every colour,
+  font and radius in `style.css` reads a custom property declared in
+  `:root`; `themes.js` applies a theme by writing those same properties
+  inline on `<html>`. A hardcoded colour anywhere in a rule is a bug — it
+  will look fine in Paper and wrong in every dark theme. The one sanctioned
+  exception is the small `[data-theme="…"]` block near the bottom of
+  `style.css`, for things a token cannot express (Terminal's uppercase
+  chrome and blinking cursor). Rules there are invisible to the in-app
+  designer, which only edits tokens.
+- **Theme values end up in an inline style declaration**, and themes come
+  from imported JSON and localStorage — both untrusted. `validateTheme()`
+  in `themes.js` is an **allowlist on value shape** (hex/rgb/hsl for
+  colours, quoted-or-bare families for fonts), not a blocklist on bad
+  characters, because a CSS value can both fetch (`url(...)`) and escape
+  its own declaration (`}`). `pages/test/themes.test.js` asserts that
+  directly; loosening those patterns turns a theme file into a CSS
+  injection.
+- **`themes.js` loads from `<head>`, not with the other scripts.** It
+  applies the stored theme as it parses. Moving it to the bottom of
+  `<body>` still works, but every load of a dark theme flashes Paper first.
 - **`sanitize.js` must stay loaded before `app.js`** in `index.html`.
   `app.js` destructures `globalThis.FeedUrls` at the top of its IIFE, so
   the wrong order throws immediately and the entire app fails to start —

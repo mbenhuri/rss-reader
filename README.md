@@ -151,6 +151,65 @@ Then the **↻ Refresh** button (or pressing `r`) triggers an immediate check.
 The button shows a spinner and reports what happened — how many feeds were
 checked, how many items are new, and how many failed.
 
+## Themes
+
+**⚙ Settings → Theme** switches the look. Three ship with the app:
+
+- **Paper** — the default: warm off-white, serif headlines.
+- **Terminal** — phosphor green on near-black, one monospace face
+  throughout, uppercase chrome and a blinking block cursor on the status
+  line.
+- **Midnight** — a plain dark theme that keeps Paper's typography.
+
+A theme is nothing but a map of token names to values — the twelve colours,
+three font stacks and one radius that the entire stylesheet is drawn from.
+That makes new ones cheap to produce, in three ways:
+
+**In the app.** *Edit / duplicate…* opens a designer with a colour picker
+and a text field for every token, grouped by role. It repaints live as you
+change values, so you can judge a colour against real articles rather than
+against a swatch. *New theme* starts from whatever is currently applied.
+Editing a built-in and keeping its name overrides that built-in; renaming it
+saves a separate theme, so duplicating never destroys the original.
+
+**By file.** *Export JSON* writes the theme out; *Import…* reads one back.
+The format is small enough to hand-write or generate:
+
+```json
+{
+  "id": "amber-crt",
+  "name": "Amber CRT",
+  "dark": true,
+  "fontImport": "https://fonts.googleapis.com/css2?family=VT323&display=swap",
+  "tokens": {
+    "paper": "#140F02",
+    "ink": "#FFB000",
+    "accent": "#FFCC55",
+    "font-ui": "'VT323', monospace"
+  }
+}
+```
+
+Any token you leave out falls back to Paper's, so a theme can be four lines
+long. `fontImport` may name one Google Fonts stylesheet — that is the only
+external host the Content-Security-Policy allows, and a URL anywhere else is
+rejected with a message rather than failing silently in the console.
+
+**In the source.** `pages/public/themes.js` holds the built-ins as plain
+objects; adding a fourth is a matter of writing one and appending it to
+`BUILTIN`. Adding a whole new *token* means adding it to the `TOKENS` list
+there and using it in `style.css` — the designer builds its fields from that
+list, so the new token becomes editable with no UI work.
+
+Imported themes are validated before anything is applied. Token values go
+into an inline style declaration, so the validator is an allowlist on value
+shape — hex or `rgb()`/`hsl()` for colours, ordinary font families for type
+— which is what stops a theme file from smuggling in a `url()` that phones
+home, or a `}` that escapes its declaration and rewrites the rest of the
+page. Invalid tokens are dropped and reported; the rest of the theme still
+applies. Themes live in `localStorage`, per browser, alongside the refresh
+settings.
+
 ## Notes
 
 - The database is entirely yours — nothing is sent anywhere except direct
@@ -228,7 +287,7 @@ beyond the worker's existing dependencies:
 
 ```
 cd worker && npm test     # feed parser + date handling
-cd pages  && npm test     # URL sanitizing rules
+cd pages  && npm test     # URL sanitizing rules + theme validation
 ```
 
 They also run automatically on every push and pull request via
@@ -238,13 +297,16 @@ Actions, so a red run means "that went out broken, go look".
 
 ### What is tested, and what isn't
 
-The suites cover pure logic: parsing feed XML, normalising dates, and deciding
-which URL schemes are safe to keep. That is where the silent, expensive bugs
+The suites cover pure logic: parsing feed XML, normalising dates, deciding
+which URL schemes are safe to keep, and deciding which theme token values are
+safe to write into a stylesheet. That is where the silent, expensive bugs
 have actually been — a feed that fails to parse doesn't crash anything, it
 just never appears, which is how one feed went weeks without syncing.
 
 Deliberately not covered, because no unit test can reach them: whether the
-Content-Security-Policy breaks page styling (needs a real browser), whether
+Content-Security-Policy breaks page styling (needs a real browser), whether a
+theme is actually *readable* (that is a judgement, not an assertion — the
+designer's live preview is the tool for it), whether
 your Settings values are correct (that's configuration, not code), and query
 performance (use `EXPLAIN QUERY PLAN` against D1 instead).
 

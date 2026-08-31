@@ -37,7 +37,11 @@
 #     posts render badly. CSS injection is a much smaller problem than
 #     script injection, and sanitizeHtml still removes <style> elements
 #     outright, so what this actually permits is inline style attributes.
-#     googleapis.com is the @import at the top of style.css.
+#     googleapis.com is the @import at the top of style.css, and also the
+#     one host a theme may name in its `fontImport` field — themes.js
+#     rejects any other origin at validation time precisely so a custom
+#     theme's web font fails with a clear message instead of a console CSP
+#     error nobody will connect back to the theme file.
 #
 #   font-src https://fonts.gstatic.com
 #     Where that Google Fonts stylesheet fetches the actual font files.

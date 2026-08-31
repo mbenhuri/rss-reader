@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
+  /* The token contract. Every colour, font and radius in this file goes
+     through one of these, which is what makes theming possible without
+     touching any rule below: themes.js writes the same custom properties
+     inline on <html>, overriding these defaults.
+     These values are the Paper theme, duplicated in themes.js so the page
+     has a sane appearance before any script runs. Change one, change both. */
   --paper: #F1F0EA;
   --paper-raised: #FBFAF6;
   --ink: #1C1E1B;
@@ -19,6 +25,11 @@
   --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 
   --radius: 3px;
+
+  /* Derived, not themed: a scrim over --paper for dialog backdrops. Themes
+     set colours, not compositing, so this is expressed in terms of the
+     background rather than as a fixed rgba() a dark theme would fight. */
+  --scrim: color-mix(in srgb, var(--paper) 65%, transparent);
 }
 
 * { box-sizing: border-box; }
@@ -449,9 +460,9 @@ dialog {
   border-radius: var(--radius);
   padding: 0;
   background: var(--paper-raised);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
 }
-dialog::backdrop { background: rgba(28,30,27,0.35); }
+dialog::backdrop { background: var(--scrim); }
 
 .settings-form { padding: 22px; display: flex; flex-direction: column; gap: 14px; width: 320px; }
 .settings-form h3 { margin: 0; font-family: var(--font-display); font-size: 18px; }
@@ -465,8 +476,102 @@ dialog::backdrop { background: rgba(28,30,27,0.35); }
   background: var(--paper);
   color: var(--ink);
 }
+.settings-form select {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.settings-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* The designer is wider than the other modals and its token list scrolls —
+   the dialog itself must not, or the buttons walk off the bottom of short
+   viewports. */
+.theme-form { width: min(560px, 92vw); }
+.theme-head { display: flex; flex-direction: column; gap: 10px; }
+.theme-check { flex-direction: row; align-items: center; gap: 8px; }
+.theme-check input { width: auto; }
+
+.theme-tokens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px 16px;
+  max-height: 46vh;
+  overflow-y: auto;
+  padding: 12px 4px;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.theme-group {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+.theme-group:first-child { margin-top: 0; }
+
+.theme-token { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink-muted); }
+/* Colour rows pair a native swatch with a text field, because the picker
+   cannot express rgb()/hsl() or be typed into, and the text field alone is
+   miserable for choosing a colour. They stay in sync both ways. */
+.theme-token-inputs { display: flex; gap: 6px; align-items: center; }
+.theme-token-inputs input[type="color"] {
+  width: 32px;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.theme-token-inputs input[type="text"] { flex: 1; min-width: 0; }
+.theme-token input.is-invalid { border-color: var(--danger); }
+
 .settings-hint { font-size: 11.5px; color: var(--ink-faint); margin: 0; }
 .settings-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+
+/* ---------- Theme-specific flourishes ---------- */
+
+/* Everything above is theme-agnostic — it reads tokens and nothing else.
+   These rules are the exception: things a colour token cannot express, keyed
+   off the theme id that themes.js stamps onto <html>. Keep this section
+   small. A theme that needs a rule here cannot be built in the in-app
+   designer, which only edits tokens. */
+
+/* Terminal: uppercase chrome and a faint phosphor glow on the accent, the
+   two things that actually read as "terminal" beyond green-on-black. The
+   glow is on text only; boxes stay flat, as a real VT does. */
+[data-theme="terminal"] .wordmark,
+[data-theme="terminal"] .btn,
+[data-theme="terminal"] .nav-item,
+[data-theme="terminal"] .item-list-header {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+[data-theme="terminal"] .wordmark::before { content: "$ "; color: var(--ink-muted); }
+[data-theme="terminal"] .wordmark,
+[data-theme="terminal"] .status-msg { text-shadow: 0 0 6px var(--accent-soft); }
+[data-theme="terminal"] .item-dot { border-radius: 0; }
+[data-theme="terminal"] .search input::placeholder { color: var(--ink-faint); }
+
+/* The block cursor after the status message is the one piece of motion the
+   theme adds; prefers-reduced-motion below turns it into a static block. */
+[data-theme="terminal"] .status-msg::after {
+  content: "\2588";
+  margin-left: 2px;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="terminal"] .status-msg::after { animation: none; }
+}
 
 /* ---------- Responsive ---------- */
 
