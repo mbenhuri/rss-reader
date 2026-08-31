@@ -9,7 +9,7 @@ crons = ["*/30 * * * *"]
 [[d1_databases]]
 binding = "DB"
 database_name = "rss-reader"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "9b91e1cb-53fd-4035-84ce-97b69b9c0097"
 
 # Optional: set with `wrangler secret put REFRESH_SECRET` to protect the
 # manual POST /refresh endpoint. If unset, /refresh is open to anyone who

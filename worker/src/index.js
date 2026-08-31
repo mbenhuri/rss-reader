@@ -140,6 +140,15 @@ async function pollFeeds(env) {
   return summary;
 }
 
+function corsHeaders(req) {
+  return {
+    'Access-Control-Allow-Origin': req.headers.get('Origin') || '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
 export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(pollFeeds(env));
@@ -147,20 +156,28 @@ export default {
 
   async fetch(req, env) {
     const url = new URL(req.url);
+    const cors = corsHeaders(req);
+
+    // Preflight — the browser sends this before the real POST because
+    // the request carries an Authorization header.
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: cors });
+    }
 
     if (url.pathname === '/refresh' && req.method === 'POST') {
       if (env.REFRESH_SECRET) {
         const auth = req.headers.get('Authorization') || '';
         if (auth !== `Bearer ${env.REFRESH_SECRET}`) {
-          return new Response('Unauthorized', { status: 401 });
+          return new Response('Unauthorized', { status: 401, headers: cors });
         }
       }
       const summary = await pollFeeds(env);
-      return Response.json(summary);
+      return Response.json(summary, { headers: cors });
     }
 
     return new Response('RSS poller worker is running. POST /refresh to trigger a manual check.', {
       status: 200,
+      headers: cors,
     });
   },
 };
