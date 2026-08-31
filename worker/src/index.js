@@ -26,6 +26,31 @@ const parser = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
   textNodeName: '#text',
+  // Entity limits. fast-xml-parser defaults to maxTotalExpansions: 1000,
+  // which counts EVERY entity reference in the document — including the
+  // ordinary &lt; &gt; &amp; &#xA; that any feed embedding escaped HTML in
+  // <description>/<content:encoded> produces by the thousand. A single
+  // content-rich feed blows past 1000 easily (the one that surfaced this had
+  // 3971 refs in 70KB), and the parse then throws, so the feed never syncs
+  // at all.
+  //
+  // Raising the count is safe because it is not the limit that protects you:
+  // the billion-laughs / quadratic-blowup guard is maxExpansionDepth, which
+  // bounds how far a custom entity may recursively expand. That stays at the
+  // strict default of 10. maxEntitySize and maxExpandedLength stay bounded
+  // too — maxExpandedLength accumulates across the WHOLE document, not per
+  // entity, so its 100000 default is also a size ceiling in disguise.
+  //
+  // Note an attack needs a custom <!ENTITY> declaration in a <!DOCTYPE> to
+  // matter here; the predefined and numeric entities counted above cannot
+  // recurse.
+  processEntities: {
+    enabled: true,
+    maxTotalExpansions: 200000, // benign count of &...; refs — generous
+    maxExpansionDepth: 10,      // the real recursion guard — keep strict
+    maxEntitySize: 10000,       // per-entity value length
+    maxExpandedLength: 5000000, // total expansion growth per document
+  },
 });
 
 // Coerce whatever the parser produced for an element into a plain string.
