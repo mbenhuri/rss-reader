@@ -1,0 +1,84 @@
+# Cloudflare Pages custom headers.
+#
+# This file must live in the build output directory (the Pages project is
+# configured with root directory `pages`, output directory `public`), so it
+# sits alongside index.html. It is applied by Pages itself — it does not
+# affect the poller worker, which sets its own headers in code.
+#
+# Syntax is finicky: a path pattern on its own line, then each header
+# indented beneath it. A header value cannot be wrapped across lines, which
+# is why the CSP below is one very long line.
+#
+# The CSP is the real reason this file exists. sanitizeHtml() in app.js
+# strips dangerous markup out of feed content before it is injected into the
+# reading pane, but that is a blocklist, and blocklists lose races. The
+# policy below is the backstop: even if something slips past the sanitizer,
+# the browser refuses to execute it.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self' https: data:; connect-src 'self' https://*.workers.dev; object-src 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Why each CSP directive is what it is:
+#
+#   script-src 'self'
+#     The whole point. index.html has no inline <script> and no event
+#     handler attributes, so no 'unsafe-inline' or hashes are needed, and a
+#     javascript: URL or injected <script> in feed content cannot run even
+#     if the sanitizer misses it. Do not add 'unsafe-inline' here — it would
+#     give back exactly the capability this file exists to remove.
+#
+#   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com
+#     'unsafe-inline' is a deliberate concession: feeds routinely ship
+#     style="..." attributes on article markup, and blocking them makes
+#     posts render badly. CSS injection is a much smaller problem than
+#     script injection, and sanitizeHtml still removes <style> elements
+#     outright, so what this actually permits is inline style attributes.
+#     googleapis.com is the @import at the top of style.css.
+#
+#   font-src https://fonts.gstatic.com
+#     Where that Google Fonts stylesheet fetches the actual font files.
+#
+#   img-src / media-src 'self' https: data:
+#     Article images and podcast audio come from whatever host the
+#     publisher uses, so these have to stay open. data: is here because the
+#     sanitizer deliberately permits inline raster images (but not SVG,
+#     which can carry script). http: is omitted — the page is HTTPS, so
+#     mixed content would be blocked anyway.
+#
+#   connect-src 'self' https://*.workers.dev
+#     'self' covers the /api/* Pages Functions. The wildcard covers the
+#     manual-refresh POST to the poller worker, whose URL the user sets in
+#     Settings. If you ever move the worker behind a custom domain, add it
+#     here or the Refresh button will start failing with a CSP error in the
+#     console rather than an obvious network error.
+#
+#   object-src / frame-src / child-src / worker-src 'none'
+#     Nothing in this app embeds plugins, frames or web workers, and feed
+#     content has no business doing so either.
+#
+#   base-uri 'none' and form-action 'self'
+#     Defense in depth alongside the sanitizer, which already strips <base>
+#     and <form>. An injected <base> could repoint every relative URL on the
+#     page; an injected form could post wherever it liked.
+#
+#     form-action is 'self' rather than 'none' on purpose. The Settings and
+#     New Folder modals are <form method="dialog">, and browsers have not
+#     been consistent about whether form-action applies to dialog-method
+#     submission — a stricter value risks breaking the only UI for setting
+#     the worker URL, which is not worth the small margin. 'self' still
+#     blocks the actual threat of a form posting to another origin, and
+#     feed-injected forms are removed by the sanitizer before this matters.
+#
+#   frame-ancestors 'none'
+#     No one may frame the reader — clickjacking protection, and stricter
+#     than the legacy X-Frame-Options.
+#
+# If the app breaks after deploying this, the browser console names the
+# exact directive that blocked the request. To roll back without redeploying
+# the whole project, rename the directive to
+# Content-Security-Policy-Report-Only, which reports violations instead of
+# enforcing them.
