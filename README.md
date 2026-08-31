@@ -14,7 +14,8 @@ Cloudflare's free tier:
 
 Shortcuts once it's running: `j`/`k` to move between articles, `m` to
 toggle read, `s` to star, `v` to open the original link, `r` to check
-feeds now, `/` to search.
+feeds now, `/` to search. Pressing `j` on the last article loads the next
+page, so you can read straight through without reaching for the mouse.
 
 ## 1. Prerequisites
 
@@ -167,6 +168,11 @@ checked, how many items are new, and how many failed.
   still cannot execute. That file is commented directive by directive. If
   you move the poller worker to a custom domain, add it to `connect-src` or
   the Refresh button will start failing with a CSP error in the console.
+- The article list loads 80 items at a time. A **Load older items** button
+  appears at the bottom of the list once there are more, and `j` past the
+  last row pulls the next page automatically. Folder headers show the total
+  unread count of the feeds inside them, which is mainly useful when the
+  folder is collapsed.
 - To change the poll frequency, edit the `crons` line in
   `worker/wrangler.toml` and redeploy the worker.
 - Feeds are polled one at a time, each with a 10s timeout, so one slow or
