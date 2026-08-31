@@ -134,8 +134,15 @@
 
       const header = document.createElement('button');
       header.className = 'folder-header';
+      // Folder total = the sum of its feeds' unread counts. Worth showing
+      // in its own right, but it matters most when the folder is collapsed
+      // and the per-feed counts are hidden.
       const unread = feeds.reduce((s, f) => s + (f.unread_count || 0), 0);
-      header.innerHTML = `<span class="folder-caret">▾</span><span>${escapeHtml(folder.name)}</span>`;
+      header.innerHTML = `
+        <span class="folder-caret">▾</span>
+        <span class="folder-name">${escapeHtml(folder.name)}</span>
+        <span class="count" data-zero="${unread ? '0' : '1'}">${unread || ''}</span>
+      `;
       // Clicking the header row collapses/expands the folder. `feedsEl` is
       // declared below with const — that is safe because this callback only
       // runs long after this function has finished (it is not a hoisting bug),
@@ -147,7 +154,7 @@
 
       // ...but clicking the folder NAME specifically filters to that folder
       // instead of collapsing it. stopPropagation keeps it from also toggling the collapse.
-      header.querySelector('span:nth-child(2)').addEventListener('click', (e) => {
+      header.querySelector('.folder-name').addEventListener('click', (e) => {
         e.stopPropagation();
         setView({ type: 'folder', id: folder.id }, folder.name);
       });

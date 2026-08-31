@@ -220,6 +220,12 @@ html, body {
 }
 .folder-header:hover { color: var(--ink); }
 .folder-caret { font-size: 10px; width: 10px; display: inline-block; }
+/* .folder-header packs its children with gap rather than space-between (the
+   caret and name should sit together), so the count is pushed right on its
+   own. min-width: 0 lets a long folder name ellipsize instead of shoving the
+   count off the edge. */
+.folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.folder-header .count { margin-left: auto; padding-left: 6px; }
 .folder-feeds { padding-left: 14px; }
 
 .feed-item {
