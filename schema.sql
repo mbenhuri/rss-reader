@@ -65,3 +65,16 @@ CREATE INDEX IF NOT EXISTS idx_items_feed ON items(feed_id);
 CREATE INDEX IF NOT EXISTS idx_items_published ON items(published_at DESC);
 CREATE INDEX IF NOT EXISTS idx_items_unread ON items(is_read);
 CREATE INDEX IF NOT EXISTS idx_items_starred ON items(is_starred);
+
+-- The sidebar's per-feed unread badge runs
+--   SELECT COUNT(*) FROM items WHERE feed_id = ? AND is_read = 0
+-- once per feed. Neither single-column index above serves that well: on its
+-- own, is_read has two distinct values, so idx_items_unread selects roughly
+-- half the table and SQLite then filters it. Worse, the planner *prefers*
+-- that index, so every feed's badge walks every unread row in the database.
+-- Leading with feed_id makes the lookup selective and is_read then satisfies
+-- the second condition from the index itself.
+--
+-- This also covers the bulk "mark this feed read" UPDATE, which filters on
+-- feed_id alone and can use the leading column.
+CREATE INDEX IF NOT EXISTS idx_items_feed_unread ON items(feed_id, is_read);
