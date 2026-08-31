@@ -1,4 +1,4 @@
-# Reader — a personal RSS reader on Cloudflare
+# RSS Reader - a personal RSS reader on Cloudflare
 
 A minimal, ad-free, keyboard-driven RSS/Atom reader. Runs entirely on
 Cloudflare's free tier:
