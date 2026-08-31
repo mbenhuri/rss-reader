@@ -32,11 +32,18 @@ wrangler d1 create rss-reader
 Copy the `database_id` it prints into `worker/wrangler.toml`
 (`REPLACE_WITH_YOUR_D1_DATABASE_ID`).
 
-Apply the schema:
+Apply the schema. This has to run from `worker/`, where `wrangler.toml`
+lives, even though `schema.sql` is at the repo root — hence the `../`:
 
 ```
-wrangler d1 execute rss-reader --remote --file=./schema.sql
+cd worker
+wrangler d1 execute rss-reader --remote --file=../schema.sql
 ```
+
+The schema is written with `CREATE ... IF NOT EXISTS` throughout, so
+re-running it later is safe and is how you add a new table or index. It
+does not migrate existing tables — adding a column to `items` means a
+separate `ALTER TABLE`.
 
 ## 3. Deploy the poller worker
 
@@ -60,14 +67,26 @@ Pick any random string; you'll paste it into the app's Settings later.
 
 ## 4. Deploy the Pages project
 
-From the `pages/` folder, either connect this repo through the Cloudflare
-dashboard (Workers & Pages → Create → Pages → connect to Git, build output
-directory = `pages/public`), or deploy directly:
+Either connect this repo through the Cloudflare dashboard (Workers & Pages
+→ Create → Pages → connect to Git), or deploy directly:
 
 ```
 cd pages
 npx wrangler pages deploy public --project-name=reader
 ```
+
+For the Git integration, the build settings for this monorepo are:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | None |
+| Build command | *(empty)* |
+| Build output directory | `public` |
+| Root directory | `pages` |
+
+Functions are auto-detected relative to that root directory. Note that only
+the Pages side auto-deploys on push — the poller worker is not connected to
+git, so changes to `worker/` always need a manual `wrangler deploy`.
 
 Then, in the Pages project settings in the dashboard:
 
@@ -75,13 +94,31 @@ Then, in the Pages project settings in the dashboard:
 pointing at the `rss-reader` database you created in step 2. This is what
 lets `/api/*` read and write your data.
 
+Two things worth knowing here, because both fail quietly:
+
+- The name must be exactly `DB`. `wrangler d1 create` suggests `rss_reader`
+  by default, and anything other than `DB` leaves `env.DB` undefined, so
+  API calls return vague 400s and 500s rather than a clear error.
+- A binding added in the dashboard only applies to *future* deployments. The
+  currently-live one keeps running without it, so trigger a redeploy
+  afterwards (Deployments → retry latest, or push an empty commit).
+
 ## 5. Put Cloudflare Access in front of it
 
-In the Cloudflare dashboard: **Zero Trust → Access → Applications → Add an
-application → Self-hosted**.
+If you've attached a **custom domain**, use the normal flow: **Zero Trust →
+Access → Applications → Add an application → Self-hosted**, and pick the
+domain from the dropdown.
 
-- Domain: your Pages project's domain (e.g. `reader.pages.dev` or a custom
-  domain if you've attached one)
+On a bare `*.pages.dev` domain that flow doesn't work — pages.dev isn't a
+zone you own, so it never appears in the dropdown. Instead:
+
+1. Pages project → **Settings → Restrict previews**. This generates a scoped
+   Access application covering `*.<project>.pages.dev`.
+2. Open that application in Zero Trust and remove the `*` from the Subdomain
+   field, so it covers the production URL as well as previews.
+
+Either way, configure the policy as:
+
 - Policy: "Allow" for your email specifically (or "Emails ending in
   @yourdomain.com"), authenticated via Google, GitHub, or a one-time PIN —
   whichever login method you enable under **Settings → Authentication**
@@ -105,19 +142,77 @@ immediately, click **⚙ Settings** and paste in:
 - **Poller worker refresh URL**: `https://rss-reader-poller.<your-subdomain>.workers.dev/refresh`
 - **Refresh secret**: the value you set in step 3, if any
 
+The `/refresh` path is required and easy to leave off. The worker answers
+every other path with a friendly 200, so a URL without it looks like it
+worked while never actually polling anything.
+
 Then the **↻ Refresh** button (or pressing `r`) triggers an immediate check.
+The button shows a spinner and reports what happened — how many feeds were
+checked, how many items are new, and how many failed.
 
 ## Notes
 
 - The database is entirely yours — nothing is sent anywhere except direct
   requests to the feeds you subscribe to and to Cloudflare's own
   infrastructure.
-- Article HTML from feeds is inserted into the reading pane with scripts,
-  iframes, and inline event handlers stripped, but feed content isn't
-  otherwise sandboxed — a reasonable tradeoff for feeds you've chosen to
-  subscribe to.
+- Article HTML from feeds is sanitized before it reaches the reading pane:
+  script/style/iframe/object/embed/base/meta/form elements are removed,
+  inline event handlers are stripped, and URL attributes are checked against
+  a scheme allowlist so `javascript:` and `data:text/html` links cannot run.
+  Inline raster images are kept (`data:image/svg+xml` is not, since SVG can
+  carry its own script). Links open in a new tab with
+  `rel="noopener noreferrer"`.
+- Behind that, `pages/public/_headers` sets a Content-Security-Policy with
+  `script-src 'self'` as the backstop, so anything the sanitizer misses
+  still cannot execute. That file is commented directive by directive. If
+  you move the poller worker to a custom domain, add it to `connect-src` or
+  the Refresh button will start failing with a CSP error in the console.
 - To change the poll frequency, edit the `crons` line in
   `worker/wrangler.toml` and redeploy the worker.
+- Feeds are polled one at a time, each with a 10s timeout, so one slow or
+  hung site cannot hold up the rest of the run. A feed that fails is
+  recorded rather than retried immediately: its row keeps a `last_error`,
+  the sidebar marks it, and the reason shows in its tooltip. The next
+  successful poll clears it.
 - Costs: D1, Pages, Workers, and Access are all free at personal-use volume.
   You'd only hit a paywall well beyond what one person reading feeds would
   generate.
+
+## Troubleshooting
+
+**Everything in the app fails at once, with vague 400s or 500s.** Almost
+always the D1 binding: either it isn't named exactly `DB`, or it was added
+in the dashboard without redeploying afterwards. See step 4.
+
+**A single feed shows no items and never gets a title.** Hover it in the
+sidebar — the tooltip holds the reason the last poll failed. `Unrecognized
+feed format` means the URL isn't RSS/Atom/RDF (often an HTML page rather
+than the feed itself); `HTTP 404`/`HTTP 403` mean the publisher moved or
+blocks the fetch; `Timed out after 10s` means the site was too slow.
+
+**The Refresh button says the URL reached the worker but not `/refresh`.**
+The refresh URL in Settings is missing the `/refresh` path.
+
+**Refresh is rejected.** The secret in Settings doesn't match the worker's
+`REFRESH_SECRET`. Re-set it with `wrangler secret put REFRESH_SECRET` and
+paste the same value into Settings.
+
+**Refresh fails outright.** The worker URL is wrong, the worker isn't
+deployed, or its response is missing CORS headers — the app and the worker
+are different origins, so every worker response needs them.
+
+**Checking what's actually in the database:**
+
+```
+cd worker
+wrangler d1 execute rss-reader --remote --command "SELECT id, title, last_error, last_fetched FROM feeds"
+```
+
+## Development notes
+
+There is no build step, no bundler and no frontend dependencies — that's
+deliberate. There's also no local dev server wired up for the Pages side and
+no test suite, so changes are verified by deploying and watching the browser
+Network and Console tabs. The feed parser is the part most likely to break
+quietly on a feed you haven't seen before; if you touch it, checking it
+against a few real feeds first is worth the minute it takes.
