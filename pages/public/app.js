@@ -390,6 +390,16 @@
         return;
       }
 
+      // A 200 that isn't JSON means we reached the worker but not the polling
+      // route — almost always a URL missing the /refresh path, which hits the
+      // worker's catch-all and returns plain text. Without this check that
+      // sails past res.ok, throws inside res.json(), and gets reported as a
+      // generic failure that blames a URL which looks perfectly correct.
+      if (!(res.headers.get('content-type') || '').includes('json')) {
+        say('URL reached the worker but not /refresh — check the path in Settings');
+        return;
+      }
+
       const summary = await res.json();
       const bits = [`Checked ${summary.checked} feed${summary.checked === 1 ? '' : 's'}`];
       bits.push(summary.newItems ? `${summary.newItems} new` : 'nothing new');
