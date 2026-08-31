@@ -1,0 +1,47 @@
+# Runs the test suites on every push and pull request.
+#
+# Until this file existed, the tests only protected whoever remembered to run
+# them. Cloudflare deploys the Pages side automatically on a push to main, so
+# this is the one place a broken change can be caught before it is live.
+#
+# Note it does NOT gate the deploy — Cloudflare's Git integration builds
+# independently of GitHub Actions. A red run here means "this went out broken,
+# go look", not "this was stopped". Making it an actual gate would mean turning
+# off the Git integration and deploying from this workflow instead.
+
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  worker:
+    name: poller worker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      # The worker has real dependencies (fast-xml-parser), so install them.
+      - run: npm ci
+        working-directory: worker
+      - run: npm test
+        working-directory: worker
+
+  pages:
+    name: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # No install step: the frontend has no dependencies by design, and the
+      # tests use node's built-in runner.
+      - run: npm test
+        working-directory: pages

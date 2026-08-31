@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:admin="http://webns.net/mvcb/"
+ xmlns:content="http://purl.org/rss/1.0/modules/content/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+>
+
+<channel rdf:about="https://slashdot.org/">
+<title>Slashdot</title>
+<link>https://slashdot.org/</link>
+<description>News for nerds, stuff that matters</description>
+<dc:language>en-us</dc:language>
+<dc:rights>Copyright Slashdot Media. All Rights Reserved.</dc:rights>
+<dc:date>2026-08-31T04:00:15+00:00</dc:date>
+<dc:publisher>Slashdot Media</dc:publisher>
+<dc:creator>feedback@slashdot.org</dc:creator>
+<dc:subject>Technology</dc:subject>
+<syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+<syn:updateFrequency>1</syn:updateFrequency>
+<syn:updatePeriod>hourly</syn:updatePeriod>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="https://linux.slashdot.org/story/26/08/31/0222236/multikernel-linux-tree-released-runs-multiple-kernels-on-bare-metal-without-a-hypervisor?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://yro.slashdot.org/story/26/08/31/0043226/gamescom-crime-spree-three-exhibitors-report-their-laptops-were-stolen?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://linux.slashdot.org/story/26/08/30/2235224/ais-creepy-crawlers-criticized-by-linux-foundations-it-infrastructure-director?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://games.slashdot.org/story/26/08/30/2017215/chesscom-launches-new-poker-site-plans-more-classic-game-sites-with-player-ratings---thanks-to-ai-protyping?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/26/08/30/1850233/google-maps-renamed-lake-ontario-to-lake-america---but-only-for-us-users?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/26/08/30/1735223/has-big-tech-captured-americas-schools?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/26/08/30/0644253/a-tiny-rainbow-on-a-chip-could-help-supercharge-6g-networks?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://it.slashdot.org/story/26/08/30/0545214/citrix-adds-a-linux-powered-escape-hatch-for-compromised-windows-pcs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://science.slashdot.org/story/26/08/30/0456255/scientists-turn-plastic-waste-into-edible-cookies?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://science.slashdot.org/story/26/08/30/0317245/spacex-launching-nasas-roman-space-telescope-to-explore-dark-energy-and-habitable-planets?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/26/08/30/067214/bmw-blames-young-people-for-loss-of-real-buttons-in-new-cars?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/26/08/30/0422259/googles-ai-powered-lifestyle-app-dreambeans-now-free-in-the-us?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://linux.slashdot.org/story/26/08/29/2223248/debian-decides-contributors-can-use-generative-ai-responsibly?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://yro.slashdot.org/story/26/08/29/2149242/anthropic-sued-by-sony-warner-for-allegedly-stealing-tens-of-thousands-of-songs-torrenting-copyrighted-works?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://entertainment.slashdot.org/story/26/08/29/210256/whats-88-year-old-ridley-scott-doing-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="https://a.fsdn.com/sd/topics/topicslashdot.gif" />
+<textinput rdf:resource="https://slashdot.org/search.pl" />
+</channel>
+<image rdf:about="https://a.fsdn.com/sd/topics/topicslashdot.gif">
+<title>Slashdot</title>
+<url>https://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+<link>https://slashdot.org/</link>
+</image>
+<item rdf:about="https://linux.slashdot.org/story/26/08/31/0222236/multikernel-linux-tree-released-runs-multiple-kernels-on-bare-metal-without-a-hypervisor?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Multikernel Linux Tree Released: Runs Multiple Kernels On Bare Metal Without a Hypervisor</title>
+<link>https://linux.slashdot.org/story/26/08/31/0222236/multikernel-linux-tree-released-runs-multiple-kernels-on-bare-metal-without-a-hypervisor?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>"Multikernel Technologies has put out mklinux v7.0-mk2, the first public release of the multikernel Linux tree it's been building since last year," reports the blog It's FOSS:
+
+The basic premise of the project is that one physical server can run several independent Linux kernels side by side, each with its own dedicated CPUs and memory. So, the same box could run a database on one kernel and a GPU training job on another without either kernel touching the other's resources... One kernel runs as the host, controlling the machine's CPUs, memory, and PCI devices. When it spins up a new kernel instance, that instance gets its own dedicated slice of hardware and boots straight onto it using Linux's kexec mechanism, running natively rather than under a hypervisor. 
+
+The host tracks all of this through device tree overlays under /sys/fs/multikernel/, and it can shift hardware between running instances while everything stays up. 
+
+That's a different setup from both VMs and containers. A VM still puts a hypervisor and a host kernel between the app and the hardware. A container skips the hypervisor, but every tenant on the machine shares one kernel... This release only supports x86_64 hardware, though Multikernel Technologies says the architecture-specific code is already modular enough for other ports to follow later.
+ 
+
+The article notes they're selling multiple products based on the kernel tree, including one for running AI agents in their own kernel with direct GPU access and one that promises to patch a running kernel without taking the system down.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Multikernel+Linux+Tree+Released%3A+Runs+Multiple+Kernels+On+Bare+Metal+Without+a+Hypervisor%3A+https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F31%2F0222236%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F31%2F0222236%2Fmultikernel-linux-tree-released-runs-multiple-kernels-on-bare-metal-without-a-hypervisor%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://linux.slashdot.org/story/26/08/31/0222236/multikernel-linux-tree-released-runs-multiple-kernels-on-bare-metal-without-a-hypervisor?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24084120&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-31T02:26:00+00:00</dc:date>
+<dc:subject>linux</dc:subject>
+<slash:department>kernels-of-wisdom</slash:department>
+<slash:section>linux</slash:section>
+<slash:comments>1</slash:comments>
+<slash:hit_parade>1,1,1,1,0,0,0</slash:hit_parade>
+</item>
+<item rdf:about="https://yro.slashdot.org/story/26/08/31/0043226/gamescom-crime-spree-three-exhibitors-report-their-laptops-were-stolen?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Gamescom Crime Spree? Three Exhibitors Report Their Laptops Were Stolen</title>
+<link>https://yro.slashdot.org/story/26/08/31/0043226/gamescom-crime-spree-three-exhibitors-report-their-laptops-were-stolen?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>From the gaming news site Aftermath"
+
+
+Game developer and consultant Ryan Laley traveled to Cologne, Germany from Essex, England to showcase his upcoming horror social deduction game Mimic at the annual Gamescom event. He paid "thousands of pounds" to get a booth at the show, where other game developers and press could try the game ahead of its October release. But Laley's Gamescom was cut short when he realized Friday morning that his brand new Alienware laptop, purchased for the event, was missing. The laptop was stored in a cupboard in the booth, and Laley started asking nearby vendors to see if someone had moved it. That's when he realized it was stolen &amp;mdash; and that he wasn't alone. Laley's booth in Gamescom's business area, specifically in the International Game Developers Association Lounge, had been hit in what appears to be a string of thefts at the convention center. The business area of the convention is not open to the public, only press and others with specific tickets. Laley said Gamescom advertised this area as having 24/7 security and limited access after hours... 
+
+Publisher and merchandiser iam8bit, in a nearby booth showcasing Escape Academy 2: Back 2 School and Petal Runner, had two laptops with game builds stolen Thursday night from its booth, a representative confirmed to Aftermath.
+
+ 
+"Meanwhile, Tessera Studios had two laptops and a Steam Deck taken from its cabinet," reports Tom's Hardware:
+
+Gamescom organizers responded to the issues, saying that although they have arranged for uniformed guards to provide general security, individual booth security must be booked separately. They've also advised exhibitors to have insurance against theft, and said these warnings are noted in the terms and conditions for participants, as well as in the event's technical guidelines. "All cases have been reported to us and to the police, and investigations are already underway," the organizers' statement read. They also said that security is one of their priorities at the event, but also added, "At an event of this size, however, there will always be individuals attempting to take advantage of the situation."
+
+&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Gamescom+Crime+Spree%3F+Three+Exhibitors+Report+Their+Laptops+Were+Stolen%3A+https%3A%2F%2Fyro.slashdot.org%2Fstory%2F26%2F08%2F31%2F0043226%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F26%2F08%2F31%2F0043226%2Fgamescom-crime-spree-three-exhibitors-report-their-laptops-were-stolen%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://yro.slashdot.org/story/26/08/31/0043226/gamescom-crime-spree-three-exhibitors-report-their-laptops-were-stolen?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24084096&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-31T00:38:00+00:00</dc:date>
+<dc:subject>crime</dc:subject>
+<slash:department>game-on</slash:department>
+<slash:section>yro</slash:section>
+<slash:comments>14</slash:comments>
+<slash:hit_parade>14,12,12,12,3,2,2</slash:hit_parade>
+</item>
+<item rdf:about="https://linux.slashdot.org/story/26/08/30/2235224/ais-creepy-crawlers-criticized-by-linux-foundations-it-infrastructure-director?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>AI's 'Creepy' Crawlers Criticized by Linux Foundation's IT Infrastructure Director</title>
+<link>https://linux.slashdot.org/story/26/08/30/2235224/ais-creepy-crawlers-criticized-by-linux-foundations-it-infrastructure-director?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>The Linux Foundation's director of IT infrastructure says they now spend more CPU cycles "rendering commits for scrapers than we spend on all other kinds of legitimate access."
+
+
+At any one time, across 5 geo-distributed nodes, there are 14 CPU cores doing nothing but rendering git commits as html.... 
+
+[W]hen a source is guaranteed to be LLM-free, like the entire history of kernel commits, it's worth its weight in gold as a source of training data... At the time of writing, linux.git is about 1.48 million commits. Oh, and we have about 922 forks of it on git.kernel.org &amp;mdash; but don't worry, it's actually extremely efficient on the backend, since it's mostly the same objects in every fork. Unless, of course, you're a scraper, in which case you have, oh, several BILLION valid URLs you can scrape, only to get 922 duplicates of the same 1.48 million commits &amp;mdash; which is exactly what the scrapers are doing. But wait, it's not just commits itself. You can also ask for patches, plain renders, diffs between arbitrary commits &amp;mdash; cgit is happy to let you, which was perfect for the times when the Internet was for humans or crawlers who obeyed robots.txt, and is AWFUL right about now, because we can generate 1.2 METRIC BAJILLION valid URLs just for a single fork of linux.git. 
+
+
+Initially, this was the solution &amp;mdash; look through the logs, find out which IPs are obvious scraper bots, and fail2ban them. At first, this was easy, because the bots helpfully told you who they were via their user-agent. Then, they wised up and started pretending that they were random vanilla browsers. So, we started banning them by IP &amp;mdash; after all, it's easy to figure out that an IP that is trying to grab every possible commit in a 8-year-old abandoned fork of linux is not really some lone Chrome on Windows user who is just furiously clicking every link that comes across their screen. The bots then started fanning out to entire subnets, but this was still meh, because obviously an IP coming from Google Compute is just pretending to be a Firefox user... 
+
+
+ And... that's when things turned really, really ugly. Suddenly, the crawlers were coming from millions of random residential or mobile IPs, all pretending to be random modern browsers. An IP like that would make 4-5 requests and then never show up in the logs again... They descended like swarms of locust, hit hard and fast until the system fell over and then moved on to the next target until you recovered. Then, they returned. Rinse. Repeat. They still do that &amp;mdash; welcome to the wonderful world of "proxy SDK monetization." It's big business, and your TV is probably doing it... 
+
+Today, git.kernel.org receives about 6M daily requests demanding to see random commits. Of these, 66% are still immediately batted away with the Anubis challenge, but 33% are now solving the math and getting through to the main site &amp;mdash; because apparently what we have to offer is worth spending a ton of cycles to calculate the Anubis challenge... With a bunch of generous assumptions, legitimate requests are only about 2% of git.kernel.org traffic &amp;mdash; everything else are scrapers... 
+
+[W]e're turning off features to reduce the number of crawlable URLs and to gate off actions that are expensive for us to run. Expect to lose some functionality, at least when accessing our resources anonymously. Trust me, we hate it just as much as you, but at this point it's a necessity... [W]e promise to still offer all of our data for download to anyone who asks. You just may have to jump through more hoops to get it. 
+Sorry.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=AI's+'Creepy'+Crawlers+Criticized+by+Linux+Foundation's+IT+Infrastructure+Director%3A+https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F30%2F2235224%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F30%2F2235224%2Fais-creepy-crawlers-criticized-by-linux-foundations-it-infrastructure-director%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://linux.slashdot.org/story/26/08/30/2235224/ais-creepy-crawlers-criticized-by-linux-foundations-it-infrastructure-director?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24084042&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T22:38:00+00:00</dc:date>
+<dc:subject>ai</dc:subject>
+<slash:department>scrape-request</slash:department>
+<slash:section>linux</slash:section>
+<slash:comments>13</slash:comments>
+<slash:hit_parade>13,13,13,12,4,3,2</slash:hit_parade>
+</item>
+<item rdf:about="https://games.slashdot.org/story/26/08/30/2017215/chesscom-launches-new-poker-site-plans-more-classic-game-sites-with-player-ratings---thanks-to-ai-protyping?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Chess.com Launches New Poker Site, Plans More Classic Game Sites with Player Ratings - Thanks to   AI Protyping</title>
+<link>https://games.slashdot.org/story/26/08/30/2017215/chesscom-launches-new-poker-site-plans-more-classic-game-sites-with-player-ratings---thanks-to-ai-protyping?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>In May Chess.com "quietly launched" a free educational poker site named Gambit, reports The Verge, where players can learn the game and improve an Elo-like rating without risking real money. And next Chess.com will expand into more classic games, including go, backgammon, and mahjong:
+
+Like Gambit, Chess.com is developing Elo-style rating systems for these games, as well. [Chess.com's chief growth officer, Albert Cheng] didn't say when the new sites will launch but that "development is moving quite rapidly" on them, using the same playbook he used for Gambit... He and one other employee took Gambit from prototype to launch within a year, partly with help from AI, mainly for coding tasks. "I think the biggest advantage that it's provided is essentially being able to read our existing codebase and our design system and apply consistent patterns to how we develop Chess.com over to a different platform and do so quickly," Cheng said.... "Just because code is easier to write doesn't mean that you just let it run on its own, but it certainly is a superpower in getting things off the ground." 
+
+Cheng also said the version of Gambit that's live at the time of writing has "zero or close to zero" AI-created assets, which were used in early prototypes. 
+
+
+According to Cheng, without help from AI, getting another site up and running would have required a bigger team or "would have been a lot more disruptive to the status quo of building and growing Chess." Now that a "small, scrappy" team can get a new platform off the ground much faster, it's opened the door for Chess.com to dip into more games, starting with poker. 
+
+The poker site already has 75,000 members, according to a blog post Friday &amp;mdash; and they've already played nearly 20 million hands and completed 100,000 lessons. The site is now holding a daily poker tournament, and on Monday will broadcast the event with live commentary on their Twitch and YouTube channels.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Chess.com+Launches+New+Poker+Site%2C+Plans+More+Classic+Game+Sites+with+Player+Ratings+-+Thanks+to+++AI+Protyping%3A+https%3A%2F%2Fgames.slashdot.org%2Fstory%2F26%2F08%2F30%2F2017215%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fgames.slashdot.org%2Fstory%2F26%2F08%2F30%2F2017215%2Fchesscom-launches-new-poker-site-plans-more-classic-game-sites-with-player-ratings---thanks-to-ai-protyping%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://games.slashdot.org/story/26/08/30/2017215/chesscom-launches-new-poker-site-plans-more-classic-game-sites-with-player-ratings---thanks-to-ai-protyping?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083982&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T20:20:00+00:00</dc:date>
+<dc:subject>classicgames</dc:subject>
+<slash:department>calling-your-bluff</slash:department>
+<slash:section>games</slash:section>
+<slash:comments>10</slash:comments>
+<slash:hit_parade>10,10,8,8,1,0,0</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/26/08/30/1850233/google-maps-renamed-lake-ontario-to-lake-america---but-only-for-us-users?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Google Maps Renamed Lake Ontario to 'Lake America' - But Only for U.S. Users</title>
+<link>https://tech.slashdot.org/story/26/08/30/1850233/google-maps-renamed-lake-ontario-to-lake-america---but-only-for-us-users?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>It's already happened &amp;mdash; at least on Google Maps.
+
+Google's online maps reflect name changes in official government sources, Google posted Saturday. So when the U.S. Geographic Names Information System formally changed the name for "Lake Ontario" to "Lake America," Google also renamed it "Lake America" &amp;mdash; for visitors from the U.S. 
+
+"Those in Canada will continue to see 'Lake Ontario'," Google said. 
+
+And people from every other country in the world... "will see both names." Though here's how it will be written... 
+
+
+Lake Ontario (Lake America) 
+
+
+"These updates follow our long-standing policy for bodies of water with names that vary from country to country, and are starting to roll out now." 
+
+
+Meanwhile, NPR reports that Ontario's Premier posted a billboard reading "Lake Ontario &amp;mdash; Now and Always" on Canada's side of the lake (repeating the message in French). And The Daily Beast reports Google move has also drawn some criticism online:
+
+
+
+"Hey you gave one of the Great Lakes the wrong name; pretty embarrassing mistake so you might want to fix that," one user wrote on X... 
+
+MapQuest has said it will not be changing the name, and instead launched a new tool that allows users to rename it themselves to whatever they want.
+
+&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Google+Maps+Renamed+Lake+Ontario+to+'Lake+America'+-+But+Only+for+U.S.+Users%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F1850233%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F1850233%2Fgoogle-maps-renamed-lake-ontario-to-lake-america---but-only-for-us-users%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/26/08/30/1850233/google-maps-renamed-lake-ontario-to-lake-america---but-only-for-us-users?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083936&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T18:53:00+00:00</dc:date>
+<dc:subject>google</dc:subject>
+<slash:department>in-hot-water</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>170</slash:comments>
+<slash:hit_parade>170,167,135,126,35,15,8</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/26/08/30/1735223/has-big-tech-captured-americas-schools?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Has Big Tech Captured America's Schools?</title>
+<link>https://news.slashdot.org/story/26/08/30/1735223/has-big-tech-captured-americas-schools?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>America's public education system has become "an avenue for multitrillion-dollar companies to enact their agendas," argues a NewYork Times reporter who's covered that tech industry influence for over 10 years. Big tech companies "advocate for new laws to require schools to teach industry-aligned subjects. They sit on committees that help shape learning standards for public school students..." 
+
+
+The reporter concludes that "Silicon Valley's efforts to capture the attention of education professionals and provide student training materials can also double as marketing or indoctrination."
+They enable some of the most powerful corporations on the planet to spin rosy technology stories for administrators, teachers and students, giving them a sanitized view of industry practices and product risks. Many parents would likely object if, say, Exxon Mobil wrote their children's environmental science curriculum. Or if Purdue Pharma trained their children's biology teachers. Yet, over the last decade, schools have often embraced the technology industry in similar ways with few questions asked. 
+
+The article excerpts the soon-to-be-released book " Coding Kids: Big Tech's Battle to Remake Public Schools," with the reporter adding more thoughts on LinkedIn:
+
+
+Every few years, Silicon Valley has urged American public schools to quickly adopt the latest technology or teach the latest tech subject: Big Data analytics; laptops for every child; algorithm-driven math and reading apps; compter programming; virtual reality. And each time the urgent arguments sounded remarkably similar: if schools just adopted the latest tech tool, or taught the latest tech subject, it would democratize learning for every child and equip students with valuable career skills. 
+Despite good intentions, "today we know some of those classroom tech drives did not exactly pan out as advertised."
+
+Now some of the same companies that urged schools to provide laptops and coding lessons are employing similar arguments to urge schools to quickly adopt A.I. tools. I've spent years covering Chromebooks and student chatbot use. And I'm troubled by our collective amnesia around school tech.
+ 
+Thanks to long-time Slashdot reader theodp for sharing the article.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Has+Big+Tech+Captured+America's+Schools%3F%3A+https%3A%2F%2Fnews.slashdot.org%2Fstory%2F26%2F08%2F30%2F1735223%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F26%2F08%2F30%2F1735223%2Fhas-big-tech-captured-americas-schools%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/26/08/30/1735223/has-big-tech-captured-americas-schools?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083900&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T17:39:00+00:00</dc:date>
+<dc:subject>education</dc:subject>
+<slash:department>student-counsels</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>30</slash:comments>
+<slash:hit_parade>30,29,25,24,9,3,1</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/26/08/30/0644253/a-tiny-rainbow-on-a-chip-could-help-supercharge-6g-networks?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>A Tiny 'Rainbow On a Chip' Could Help Supercharge 6G Networks</title>
+<link>https://tech.slashdot.org/story/26/08/30/0644253/a-tiny-rainbow-on-a-chip-could-help-supercharge-6g-networks?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description> ScienceDaily reports:
+
+A microchip about the size of a grain of rice can generate a highly organized "rainbow" of light, a capability that could eventually support faster, higher-capacity 6G communications and extremely precise timing for quantum technologies. Physicists at Loughborough University, working with an international research team, demonstrated a system that produces a series of precisely spaced light frequencies. Those optical frequencies can then be converted into multiple high-frequency electromagnetic signals known as millimeter waves. 
+
+ Millimeter waves are attracting growing interest for future communications because they can provide considerably more bandwidth, giving networks more room to transmit data. A major obstacle, however, has been producing these signals with the precision and stability required for advanced applications... "They could ultimately contribute to faster, higher capacity 6G networks," [said Dr. Luke Peters, of Loughborough University's Emergent Photonics Research Centre], "but the potential goes far beyond communications. These frequencies could also be used in radar systems as well as spectroscopy and astronomical instruments, helping scientists study materials and make extremely precise measurements of the universe. 
+"These applications are still some way off, and there are challenges to overcome before the technology can be used in real-world systems &amp;mdash; but our latest work has tackled a major one..." A microcomb generates an extremely precise set of light frequencies arranged somewhat like the colors in a rainbow, although the light itself is invisible to the human eye. A specialized antenna can then convert those optical frequencies into millimeter waves. Earlier research demonstrated that microcombs could produce a single precise millimeter wave frequency. Generating many frequencies simultaneously could be far more useful because each could potentially serve as a separate channel for transmitting information at the same time. Achieving that, however, requires a microcomb with exceptional stability and signal quality. 
+In a new Nature Communications paper, the Loughborough led researchers report a system capable of doing exactly that. 
+
+Their system connects its chip-based microresonator to a much larger loop of optical fiber where laser light continuously travels through both parts of the system, according to the article. 
+
+"The team is now investigating how the microcomb system could eventually move from a laboratory experiment into practical technology."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=A+Tiny+'Rainbow+On+a+Chip'+Could+Help+Supercharge+6G+Networks%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F0644253%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F0644253%2Fa-tiny-rainbow-on-a-chip-could-help-supercharge-6g-networks%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/26/08/30/0644253/a-tiny-rainbow-on-a-chip-could-help-supercharge-6g-networks?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083570&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T16:34:00+00:00</dc:date>
+<dc:subject>communications</dc:subject>
+<slash:department>broadcasting-in-color</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>22</slash:comments>
+<slash:hit_parade>22,20,18,16,3,0,0</slash:hit_parade>
+</item>
+<item rdf:about="https://it.slashdot.org/story/26/08/30/0545214/citrix-adds-a-linux-powered-escape-hatch-for-compromised-windows-pcs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Citrix Adds a Linux-Powered Escape Hatch For Compromised Windows PCs</title>
+<link>https://it.slashdot.org/story/26/08/30/0545214/citrix-adds-a-linux-powered-escape-hatch-for-compromised-windows-pcs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Citrix's Desktop as a Service (DaaS) product includes a lightweight, hardened second operating system called UniconOS (once called "eLux") to offer Windows customers a write-protected file system Citrix says is secure against computer viruses and other malware. Nerds.xyz reports:
+
+According to the company, the environment remains isolated from the Windows filesystem and uses Secure Boot protections covering the shim, bootloader, kernel, and initial RAM filesystem. That separation matters when ransomware encrypts Windows or a faulty update leaves the operating system trapped in a boot loop. Instead of repairing Windows immediately, an employee can boot into UniconOS and use Citrix DaaS to access virtual applications and desktops. 
+
+Citrix SecurAccess with Chrome Enterprise provides access to internal web applications under the organization's existing security policies. In other words, UniconOS does not actually fix the damaged Windows installation. It gives employees another route to their applications while the IT department investigates or repairs Windows... [T]he installer shrinks the Windows volume, creates a new partition, copies UniconOS onto it, and registers the necessary boot entries. Windows remains the default operating system during ordinary use, although administrators can configure boot delays and fallback behavior... 
+
+The approach could prove useful following a widespread ransomware attack or another defective Windows update resembling the CrowdStrike incident of 2024. Recovery would happen independently on every compatible endpoint instead of requiring IT employees to physically handle thousands of computers. 
+
+ Thanks to Slashdot reader BrianFagioli for sharing the news.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Citrix+Adds+a+Linux-Powered+Escape+Hatch+For+Compromised+Windows+PCs%3A+https%3A%2F%2Fit.slashdot.org%2Fstory%2F26%2F08%2F30%2F0545214%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fit.slashdot.org%2Fstory%2F26%2F08%2F30%2F0545214%2Fcitrix-adds-a-linux-powered-escape-hatch-for-compromised-windows-pcs%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://it.slashdot.org/story/26/08/30/0545214/citrix-adds-a-linux-powered-escape-hatch-for-compromised-windows-pcs?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083558&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T15:34:00+00:00</dc:date>
+<dc:subject>cloud</dc:subject>
+<slash:department>desktop-as-a-service</slash:department>
+<slash:section>it</slash:section>
+<slash:comments>12</slash:comments>
+<slash:hit_parade>12,12,12,12,2,0,0</slash:hit_parade>
+</item>
+<item rdf:about="https://science.slashdot.org/story/26/08/30/0456255/scientists-turn-plastic-waste-into-edible-cookies?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Scientists Turn Plastic Waste Into Edible Cookies</title>
+<link>https://science.slashdot.org/story/26/08/30/0456255/scientists-turn-plastic-waste-into-edible-cookies?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>A team of researchers at Southern Illinois University Carbondale engineered yeast to create cookies that were 3D printed out of plastic waste, reports Futurism:
+
+The yeast breaks down the components of plastic compounds and agricultural byproducts like discarded plant stalks into proteins, fats, acids, and flavorings that we can eat. When these are combined together, the mixture is fed into a 3D printer that spits out cookies of any desired shape. The researchers chose to print their cookies as the Greek letter &amp;#194;, creating what they call "&amp;#194;Bites" &amp;mdash; or micro bites. They haven't actually eaten one of their &amp;#194;Bites yet, as they wait for university approval... "I think it has a pleasant, appealing aroma," Lahiru Jayakody, a microbiologist at SIU who led the research, told NewScientist. "And it will taste good, too. We've not tasted it, but it smells good &amp;mdash; that's for sure &amp;mdash; like a real cookie...." 
+
+
+The researchers used CRISPR gene-editing technology to reprogram yeast strains to eat polyethylene terephthalate (PET), a widely used form of plastic commonly found in disposable water bottles, food packaging, and clothes, which is rich with carbon. Before the yeast can start feasting, the PET plastics are subjected to a process called oxidative hydrothermal dissolution to break them down into smaller bits that the microbes can digest. The purported advantage of this approach is that it's environmentally friendly, using only heat, water, and oxygen. The yeast feasts on these stripped-down plastic bits, turning them into a slurry of proteins, fats, and acids that're combined with fiber, starch, and sweetener to make them more palatable. One of the yeast strains in particular was able to turn plant biomass into tasty vanilla flavorings... 
+
+[R]ight now, it's an expensive process, costing around $60 to produce a kilogram of cookies, The Guardian reported. And some experts say it's wishful thinking to believe we can 3D-print, and then eat, ourselves out of these global problems with 3D-printed, delectable treats. "We produce 400 million tons a year of plastic waste. You're not going to turn it all into cookies," Jason Hallett at Imperial College London told New Scientist. "So it's not a solution to the plastic-waste crisis. There's no way you could do this commercially. We're not gonna be eating plastic cookies."
+
+ 
+
+Thanks to Slashdot reader fjo3 for sharing the article.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Scientists+Turn+Plastic+Waste+Into+Edible+Cookies%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F26%2F08%2F30%2F0456255%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F26%2F08%2F30%2F0456255%2Fscientists-turn-plastic-waste-into-edible-cookies%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/26/08/30/0456255/scientists-turn-plastic-waste-into-edible-cookies?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083544&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T14:34:00+00:00</dc:date>
+<dc:subject>science</dc:subject>
+<slash:department>how-the-cookie-crumbles</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>67</slash:comments>
+<slash:hit_parade>67,66,59,53,6,3,2</slash:hit_parade>
+</item>
+<item rdf:about="https://science.slashdot.org/story/26/08/30/0317245/spacex-launching-nasas-roman-space-telescope-to-explore-dark-energy-and-habitable-planets?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>SpaceX Launching NASA's Roman Space Telescope to Explore Dark Energy and Habitable Planets</title>
+<link>https://science.slashdot.org/story/26/08/30/0317245/spacex-launching-nasas-roman-space-telescope-to-explore-dark-energy-and-habitable-planets?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>SpaceX is scheduled to launch the Roman Space Telescope on a Falcon Heavy rocket, with the launch window opening at 7:26 a.m. EDT (1126 GMT). NASA will carry the launch live on YouTube. 
+
+CNN offers this mission overview from NASA Administrator Jared Isaacman. "Roman will investigate dark matter, dark energy and the structure of the universe itself, and accelerate the future of discovery of potentially habitable planets outside our solar system." In fact, "NASA anticipates that Roman will image more than 50 times as much of the sky in the next five years as Hubble covered in three decades," reports USA Today, noting that "every single image it beams back to Earth will contain the equivalent of 100 pictures Hubble would capture."
+
+
+
+
+The barrel-shaped Roman telescope is due to set up operations nearly 1 million miles from Earth and begin scouring previously unobservable areas of the cosmos... NASA will make all of Roman's data available for anyone to peruse, meaning astronomers from all over the world will have the opportunity to make use of the observatory for advanced research, NASA says... Spanning 42 feet long and more than 14 feet wide, the Nancy Grace Roman Space Telescope is outfitted with two primary instruments 
+
+Its 300-megapixel near-infrared camera is built to look across the universe and study the three-dimensional distribution of dark matter, reports The Conversation. But it's also carrying a coronagraph instrument built to dramatically reduce the glare from distant stars "that will test the technology for future missions that plan to detect Earth-like planets around other stars." 
+
+
+ The mission's generating some excitement. "Nearly three decades after dark energy's discovery, astronomers are letting themselves hope that a breakthrough is almost at hand," writes Scientific American, adding that cosmologists "are increasingly questioning the validity of their vaunted standard model, although no one can decide exactly what comes next."
+
+Roman will chase down three different ways of detecting dark energy, seeking to more precisely define what its effects on the universe are and whether they're changing over time. The first one involves surveying the skies for a special variety of supernova that's so predictable that scientists can use it as a beacon for calculating what a host galaxy's distance is and how fast it's moving away from us &amp;mdash; the same technique that first betrayed dark energy back in the 1990s. The second entails mapping large numbers of galaxies to discern huge, faint bubbles in the cosmos that represent the fossilized signatures of sound waves that froze out of the universe's primordial plasma as it expanded and cooled. The sizes of those bubbles scale with the size and growth of the very early universe, offering a powerful probe for studying cosmic change over time. The third tracer uses a technique called microlensing, which reveals clumps of dark matter via their warping of background starlight, to fill in scientists' still incomplete reckoning of matter's cosmic distribution. 
+
+The Houston Chronicle reports that the telescope will also study rogue planets, isolated black holes, starquakes and planet-forming disks around nearby stars.
+
+ "Almost regardless of what your scientific interest is, Roman is probably already planning to take observations," Julie McEnery, Roman's senior project scientist at NASA, said during a July news conference." 
+
+
+
+NBC News reports that after the Roman telescope launches, "it's set to spend more than three months journeying to its final destination, located roughly 1 million miles from Earth."
+
+
+Three primary surveys are planned over the course of the Roman telescope's mission. During the largest one, which will last over a year, the telescope will peer through the Milky Way's dense, star-packed center, known as the galactic bulge, building a vast catalog of all the astronomical objects it observes. The second and third surveys will focus on dark matter and dark energy. 
+
+Axios notes that Roman's primary mirror "is about the same size as that of Hubble's, but at 80% less weight &amp;mdash; reflecting huge tech advancements since Hubble was built in the 1970s." And NPR reports NASA began planning the $4.3 billion telescope 15 years ago to search for supernovas to help explore dark energy &amp;mdash; when "a call came in from the government office in charge of surveillance satellites."
+
+
+
+
+"The National Reconnaissance Office reached out to NASA," [remembers cosmologist Daniel Scolnic at Duke University], "saying, 'We have this amazing satellite sitting in a hangar that we're not using. And what what do you guys think about instead of pointing downwards, we point upwards, and you guys use it?'" NASA said yes. It took some substantial modifications, but now that old satellite is set to become NASA's next major space observatory.... 
+
+Another goal of the telescope is to spend a month surveying all the stars in the Milky Way galaxy. Julie McEnery is Roman's project scientist. She says even though Roman has broadly the same sensitivity and sharpness of vision as the currently orbiting Hubble Space Telescope, its design lets it do things much faster. "That one month of observations to survey our Milky Way galaxy would take about a century with Hubble," says McEnery.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=SpaceX+Launching+NASA's+Roman+Space+Telescope+to+Explore+Dark+Energy+and+Habitable+Planets%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F26%2F08%2F30%2F0317245%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F26%2F08%2F30%2F0317245%2Fspacex-launching-nasas-roman-space-telescope-to-explore-dark-energy-and-habitable-planets%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/26/08/30/0317245/spacex-launching-nasas-roman-space-telescope-to-explore-dark-energy-and-habitable-planets?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083518&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T11:22:00+00:00</dc:date>
+<dc:subject>nasa</dc:subject>
+<slash:department>strange-new-worlds</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>23</slash:comments>
+<slash:hit_parade>23,17,15,13,4,2,0</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/26/08/30/067214/bmw-blames-young-people-for-loss-of-real-buttons-in-new-cars?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>BMW Blames Young People For Loss of Real Buttons In New Cars</title>
+<link>https://tech.slashdot.org/story/26/08/30/067214/bmw-blames-young-people-for-loss-of-real-buttons-in-new-cars?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>BMW is about to release their most screen-dependent vehicles ever, reports Car and Driver:
+
+
+Step into the BMW iX3, and you'll notice something is missing: real buttons. The climate controls are fettered to the center screen, as is nearly every other feature, save for a handful located in the center console &amp;mdash; at least the window switches are still on the doors...
+
+But don't blame a desire for larger profit margins; BMW's move away from physical switchgear and toward touchscreen dependence is the fault of younger buyers, according to one executive. In an interview with CarExpert, Vikram Pawah, the CEO of BMW Group Australia, said that young buyers prefer the newer controls... According to the executive, younger customers are less patient with their technology. "They want things done quickly, and they're multitasking," Pawah said. "And we have to keep that in mind. That's how customers are evolving. They are multitasking...." 
+
+Tesla has always forced functions to its center screen; newer players such as Rivian do the same. And in recent years, established brands like Mazda and Mercedes-Benz have moved more and more functions to touchscreens. 
+
+BMW's iX3 also includes a new safety feature &amp;mdash; a side-radar that detects if a cyclist or vehicle is approaching, and delays the release of the electronic door lock "until the danger passes."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=BMW+Blames+Young+People+For+Loss+of+Real+Buttons+In+New+Cars%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F067214%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F067214%2Fbmw-blames-young-people-for-loss-of-real-buttons-in-new-cars%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/26/08/30/067214/bmw-blames-young-people-for-loss-of-real-buttons-in-new-cars?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083562&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T07:34:00+00:00</dc:date>
+<dc:subject>transportation</dc:subject>
+<slash:department>pushing-your-buttons</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>149</slash:comments>
+<slash:hit_parade>149,149,135,120,38,14,9</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/26/08/30/0422259/googles-ai-powered-lifestyle-app-dreambeans-now-free-in-the-us?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Google's AI-Powered Lifestyle App 'Dreambeans' Now Free in the US</title>
+<link>https://tech.slashdot.org/story/26/08/30/0422259/googles-ai-powered-lifestyle-app-dreambeans-now-free-in-the-us?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Google's AI assistant Gemini crawls your Google apps for "more personalized suggestions," in a feature they call Personal Intelligence. Now when given permission, an Android/iOS app called Dreambeans "uses Personal Intelligence to connect information from Google apps like Gmail, Calendar, Photos, YouTube and Search History, to curate a finite collection of daily stories designed to spark new ideas." In a slick new video Google says the app will "surface what matters to you." 
+
+The blog 9to5Google notes that after previously requiring a subscription, Dreambeans "is now available for free Google Accounts in the US to test, calling it "very much like a hyper-personalized Google Now or Discover feed."
+
+Instead of using stock imagery, each Dreambeans story is accompanied by Nano Banana 2-generated artwork that uses an illustrated style. For example, if Dreambeans recommends a hike, you might see yourself and a group of friends at that location... There's also an "Ask anything" chat experience to get more information. You can leave feedback by tapping the heart or downvoting, while the chat interface allows you to provide more details. "Tune your feed" lets you tell Dreambeans what you "want more stories about" and what it should never show.
+
+ 
+
+Or, as TechCrunch senior writer Lucas Ropek puts it, you get a curated list of AI-illustrated "stories" that "will turn your life into a cartoon"
+
+
+[Gozde Oznur, the product lead behind the new app, told TechCrunch the app] has also been built as a doomscrolling antidote, in that it only provides users with a limited number of stories per day &amp;mdash; typically 10 to 14. The idea is to get a few inspirational ideas and then go out and live your life, she said. A lot of companies are currently trying to court the user that is sick of phone addiction. I recently reviewed a startup, Bond, which also uses AI to auto-generate lifestyle suggestions for the user. 
+What about privacy protections? According to Oznur, they are pretty solid. The only person with access to the app's stories is the user, she said. Users can also delete their data whenever they want, and can choose which Google services they want to connect to the tool.
+
+&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Google's+AI-Powered+Lifestyle+App+'Dreambeans'+Now+Free+in+the+US%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F0422259%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F26%2F08%2F30%2F0422259%2Fgoogles-ai-powered-lifestyle-app-dreambeans-now-free-in-the-us%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/26/08/30/0422259/googles-ai-powered-lifestyle-app-dreambeans-now-free-in-the-us?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083538&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T04:34:00+00:00</dc:date>
+<dc:subject>ai</dc:subject>
+<slash:department>magic-beans</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>30</slash:comments>
+<slash:hit_parade>30,30,27,26,8,5,3</slash:hit_parade>
+</item>
+<item rdf:about="https://linux.slashdot.org/story/26/08/29/2223248/debian-decides-contributors-can-use-generative-ai-responsibly?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Debian Decides: Contributors Can Use Generative AI 'Responsibly'</title>
+<link>https://linux.slashdot.org/story/26/08/29/2223248/debian-decides-contributors-can-use-generative-ai-responsibly?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>This week Debian voted on whether to ban AI-assisted contributions. The winning proposal? "Debian neither endorses nor prohibits the use of generative AI tools" in its projects, documentation, and packaging... Generative AI "is neither exempt from nor subject to special rules beyond the standards already expected of Debian contributors." 
+
+"The responsibility for every contribution rests with the contributor who submits it, who remains accountable for its technical quality, legal acceptability, and suitability for inclusion in Debian."
+
+
+"We recognize that such tools can substantially improve the productivity of contributors when used responsibly, allowing volunteers to spend more of their limited time on work that requires technical expertise, judgment, review, and collaboration. 
+
+The Debian Project nevertheless expects that all contributions submitted to Debian, regardless of how and with which tools they were produced, satisfy the same standards of quality, correctness, maintainability, and legal compliance. The use of a generative AI tool does not diminish the contributor's responsibility for the work they submit. Contributors are expected to understand, review, test, and, where appropriate, modify AI-assisted output before incorporating it into Debian. Blindly accepting or uploading AI-generated material without appropriate human review is inconsistent with Debian's established development practices. 
+
+We enourage our contributors to disclose whether a contribution was made with AI assitance, but do not require them to do so. 
+
+Debian acknowledges that the legal status of material produced by generative AI systems remains the subject of ongoing discussion in many jurisdictions, including questions relating to copyright... The Project does not seek to resolve these unsettled legal questions through this General Resolution, nor does it adopt a position on whether AI-generated output is, in whole or in part, copyrightable or derived from copyrighted works. Instead, Debian continues to rely on the judgment and responsibility of its individual contributors. Project members are expected to exercise appropriate care when using generative AI tools, to consider the provenance and licensing implications of material they contribute, and to avoid introducing content whose legal status they cannot reasonably justify. Existing Debian policies governing licensing, copyright, software freedom, and the acceptance of contributions continue to apply irrespective of the tools used to produce those contributions.
+
+ 
+
+It also cautions contributors to keep keys, credentials, and embargoed security reports from leaking to
+third-party AI services. 
+
+But discussion continues on Debian's mailing list. "I regret the loss of contributors," wrote the author of the winning proposition (while acknowledging it would have happened with either option winning).
+"It is just too early to take a final decision on the matter. Let's revisit this in two years or so, and let this mess of a GR be a warning for our future selves." 
+
+
+Other comments from the mailing list:
+
+
+"On a very personal note, I regret that the winning option does not
+acknowledge all the legitimate concerns around AI: environmental impact,
+copyright and licensing uncertainty, the health of Free Software
+communities, and the strain of aggressive scraping on the open web... [W]e have a lot of work ahead of us to act as a community and understand how we can continue to accommodate the very large minority that would have preferred to ban or discourage AI.
+"I also think that our next discussion should distinguish between locally running LLMs and cloud LLMs. The way things are going, locally running LLMs will be an alternative, and then you can much better control what was the training data and the Freeness of the thing."
+Thanks to long-time Slashdot reader Robbat2 for sharing the news.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Debian+Decides%3A+Contributors+Can+Use+Generative+AI+'Responsibly'%3A+https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F29%2F2223248%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Flinux.slashdot.org%2Fstory%2F26%2F08%2F29%2F2223248%2Fdebian-decides-contributors-can-use-generative-ai-responsibly%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://linux.slashdot.org/story/26/08/29/2223248/debian-decides-contributors-can-use-generative-ai-responsibly?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083382&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-30T01:34:00+00:00</dc:date>
+<dc:subject>debian</dc:subject>
+<slash:department>poll-request</slash:department>
+<slash:section>linux</slash:section>
+<slash:comments>34</slash:comments>
+<slash:hit_parade>34,30,22,20,4,3,1</slash:hit_parade>
+</item>
+<item rdf:about="https://yro.slashdot.org/story/26/08/29/2149242/anthropic-sued-by-sony-warner-for-allegedly-stealing-tens-of-thousands-of-songs-torrenting-copyrighted-works?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Anthropic Sued By Sony, Warner For Allegedly Stealing Tens of Thousands of Songs, Torrenting Copyrighted Works</title>
+<link>https://yro.slashdot.org/story/26/08/29/2149242/anthropic-sued-by-sony-warner-for-allegedly-stealing-tens-of-thousands-of-songs-torrenting-copyrighted-works?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description> Axios reports:
+
+
+Some of the world's largest music publishers filed a blockbuster lawsuit against Anthropic late Friday night, alleging "one of the largest and most blatant ongoing thefts of intellectual property in history." 
+
+
+The suit is the opening salvo in what is now likely to be a yearslong fight over music, AI, and how intellectual property is protected in a new era of technology... The Sony/Warner lawsuit is notable because it's broad. It alleges Anthropic unlawfully trained its models off "tens of thousands" of music publishers' copyrighted compositions, whereas other lawsuits have focused on a narrower set of works. BMG's lawsuit against Anthropic, for example, claims infringement against 493 compositions. 
+
+
+What they're saying: "Defendants Anthropic and its founders Dario Amodei and Benjamin Mann have conducted a brazen campaign of illegally torrenting, scraping, and downloading copyrighted works on a massive scale in order to develop, operate, and reap enormous profits from Anthropic's 'Claude' series of artificial intelligence ('AI') models," the plaintiffs write in the 48-page complaint. They also claim that Anthropic pirated thousands of copyrighted musical works... 
+
+More details from The Verge:
+
+
+The companies are asking for up to $150,000 per work, plus up to $25,000 for each instance when identifiable copyright data was stripped. In total, the damages could amount to several billion dollars if a court finds in Sony and Warner's favor and awards the maximum amount... 
+
+The suit alleges that Mann used BitTorrent to download over five million pirated books, and that employees downloaded at least two million more from Pirate Library Mirror. It also claims that Anthropic scraped lyrics from sites like MusixMatch and LyricFind, which paid to license content from the labels.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Anthropic+Sued+By+Sony%2C+Warner+For+Allegedly+Stealing+Tens+of+Thousands+of+Songs%2C+Torrenting+Copyrighted+Works%3A+https%3A%2F%2Fyro.slashdot.org%2Fstory%2F26%2F08%2F29%2F2149242%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F26%2F08%2F29%2F2149242%2Fanthropic-sued-by-sony-warner-for-allegedly-stealing-tens-of-thousands-of-songs-torrenting-copyrighted-works%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://yro.slashdot.org/story/26/08/29/2149242/anthropic-sued-by-sony-warner-for-allegedly-stealing-tens-of-thousands-of-songs-torrenting-copyrighted-works?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083364&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-29T23:00:00+00:00</dc:date>
+<dc:subject>ai</dc:subject>
+<slash:department>facing-the-music</slash:department>
+<slash:section>yro</slash:section>
+<slash:comments>48</slash:comments>
+<slash:hit_parade>48,48,40,31,6,4,1</slash:hit_parade>
+</item>
+<item rdf:about="https://entertainment.slashdot.org/story/26/08/29/210256/whats-88-year-old-ridley-scott-doing-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>What's 88-year-old Ridley Scott Doing Now? </title>
+<link>https://entertainment.slashdot.org/story/26/08/29/210256/whats-88-year-old-ridley-scott-doing-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>The Los Angeles Times first calls Ridley Scott's newest movie "a postapocalyptic thriller that trades zombies for pandemics and asks whether hope can outlast catastrophe." But besides 
+The Dog Stars, Scott is also working on an adaptation of Robert Louis Stevenson's "Treasure Island" starring Hugh Jackman, and is thinking about turning one of his past films into a musical. ("I can't tell you which one because they're being difficult.") The common theme, they suggest, is a director who allows his stories to "speak through evocative, immersive images rather than unnecessary exposition."
+
+
+
+
+The British director says it's because he got his start in advertising after attending the Royal College of Art in London. After 1982's neon-coated sci-fi thriller "Blade Runner," Scott notably made the iconic Apple Macintosh computer ad "1984," a memorable Orwellian-themed clip that contained suggestions of the dystopias that would continue to fascinate Scott in his filmmaking. "Advertising in England at that point became a competitive art form," he says, pointing to the notorious "Adland Five," a group of directors that included Hugh Hudson, Adrian Lyne, Alan Parker, Scott and his brother Tony. "I've got a show reel which is 50 years old which would entertain the s &amp;mdash; out you. Hasn't aged at all. Our visual drive changed the face of how films looked." 
+That's apparent in Scott's latest, "The Dog Stars" (in theaters Friday), a film about survival after the end of the world. It's based on Peter Heller's 2012 novel and set in Colorado 10 years in the future after an aggressive flu has decimated much of the population. Those remaining alive use any means necessary to stay that way, resulting in instability, brutality and, more hopefully, connection...
+These days, Scott develops movies with his production company, Scott Free, which he founded with his late brother Tony in 1995. Before that he says he struggled to find good scripts. And rarely has someone handed one to him. "I've only ever had three films land on my desk," he says. "One was 'Alien,' which I was fifth choice for after Robert Altman." He makes a face. "Can you imagine offering Robert Altman 'Alien'? How stupid can you get?" 
+Another was 2015 space adventure "The Martian," which Scott says had been sitting on a shelf for two years before it was sent to him. Scott's grounded, semi-comedic take on Andy Weir's novel resulted in seven Oscar nominations. The third screenplay to materialize was "The Dog Stars." "I read it and I was blown away," Scott says. 
+
+Deadline notes that Scott is already re-writing the third prequel to Alien, citing Scott's comments to French outlet AlloCin&amp;eacute;.
+
+"The one that just came out [2024's Alien: Romulus] was OK. I think it needs some help. So, I've gone back in." Scott continued, "I've already got a footprint for the next Alien.... I'm picking up where we left off in Covenant with Micheal Fassbender, who now thinks he's Ozymandius." With the sequel bringing back Fassbender's futuristic AI droid, Scott sees an opportunity to explore the repercussions of artificial intelligence in our current world. "I like the fact that AI has gone off the rails," said Scott of where the character is at the end of Covenant. "If we go AI, the moment we discover it's off the rails is too late. It could switch every digital thing off in the world like that. You'd have fucking chaos. It's that kind of stuff that's scary." 
+
+Scott tells the Los Angeles Times that the malfunctioning AI character fascinates him, and in the movie will be creating a "brave new world for himself... AIs can go off. And if they do, it's like a bomb..."
+
+So far, Scott says he hasn't implemented AI technologies into his filmmaking. He holds up his "Treasure Island" Ridleygrams [hand-drawn storyboards] and shakes them at the camera. "I can compete with an AI without any problem making images," he says. "But it's coming, inevitably." 
+Scott was not involved in the forthcoming Prime Video series "Blade Runner 2099," out in November. "I can't blame my lawyers and my agents at that time, but somehow we let 'Blade Runner' go," he says. "And when you're not the author of the actual written word, you don't have a piece." (He was more involved in Noah Hawley's recent "Alien: Earth" series, which he calls "pretty damn good....") 
+
+Does that mean he thinks about his legacy as a filmmaker? He does, but not often. "When you think of your legacy, you're too near the end," Scott says. "I'm not near the end." He looks up from his drawings. "I've had a riotous time," he says. He corrects himself: "I'm having a riotous time."
+&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=What's+88-year-old+Ridley+Scott+Doing+Now%3F+%3A+https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F26%2F08%2F29%2F210256%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F26%2F08%2F29%2F210256%2Fwhats-88-year-old-ridley-scott-doing-now%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://entertainment.slashdot.org/story/26/08/29/210256/whats-88-year-old-ridley-scott-doing-now?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=24083346&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2026-08-29T22:00:00+00:00</dc:date>
+<dc:subject>movies</dc:subject>
+<slash:department>dogged-stars</slash:department>
+<slash:section>entertainment</slash:section>
+<slash:comments>22</slash:comments>
+<slash:hit_parade>22,22,16,15,3,0,0</slash:hit_parade>
+</item>
+<textinput rdf:about="https://slashdot.org/search.pl">
+<title>Search Slashdot</title>
+<description>Search Slashdot stories</description>
+<name>query</name>
+<link>https://slashdot.org/search.pl</link>
+</textinput>
+</rdf:RDF>

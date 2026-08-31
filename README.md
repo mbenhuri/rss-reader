@@ -211,8 +211,48 @@ wrangler d1 execute rss-reader --remote --command "SELECT id, title, last_error,
 ## Development notes
 
 There is no build step, no bundler and no frontend dependencies — that's
-deliberate. There's also no local dev server wired up for the Pages side and
-no test suite, so changes are verified by deploying and watching the browser
-Network and Console tabs. The feed parser is the part most likely to break
-quietly on a feed you haven't seen before; if you touch it, checking it
-against a few real feeds first is worth the minute it takes.
+deliberate. There's also no local dev server wired up for the Pages side, so
+browser behaviour is still verified by deploying and watching the Network and
+Console tabs.
+
+### Running the tests
+
+Both suites use Node's built-in test runner, so there is nothing to install
+beyond the worker's existing dependencies:
+
+```
+cd worker && npm test     # feed parser + date handling
+cd pages  && npm test     # URL sanitizing rules
+```
+
+They also run automatically on every push and pull request via
+`.github/workflows/test.yml`. Note that this reports failures but does **not**
+block a deploy — Cloudflare's Git integration builds independently of GitHub
+Actions, so a red run means "that went out broken, go look".
+
+### What is tested, and what isn't
+
+The suites cover pure logic: parsing feed XML, normalising dates, and deciding
+which URL schemes are safe to keep. That is where the silent, expensive bugs
+have actually been — a feed that fails to parse doesn't crash anything, it
+just never appears, which is how one feed went weeks without syncing.
+
+Deliberately not covered, because no unit test can reach them: whether the
+Content-Security-Policy breaks page styling (needs a real browser), whether
+your Settings values are correct (that's configuration, not code), and query
+performance (use `EXPLAIN QUERY PLAN` against D1 instead).
+
+### Adding a test for a feed that misbehaves
+
+This is the most useful thing you can do when a feed breaks. Save the raw
+feed as a fixture and assert what it should produce:
+
+```
+curl -sL 'https://example.com/feed.xml' -o worker/test/fixtures/rss-example.xml
+```
+
+Then add it to the `FEEDS` table at the top of `worker/test/parse.test.js`.
+Real captured XML is worth far more than hand-written examples — real feeds
+are stranger than anything you would think to invent. Run the test before
+fixing the bug and confirm it fails; a test that has never failed is not yet
+known to test anything.

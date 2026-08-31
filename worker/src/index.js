@@ -116,7 +116,7 @@ function normalizeAtomEntry(raw) {
 // yields an Invalid Date for those and .toISOString() then THROWS, which
 // previously aborted the rest of that feed's items. Fall back to "now" so one
 // bad item can't take the whole feed down with it.
-function toIsoDate(value) {
+export function toIsoDate(value) {
   if (value != null && value !== '') {
     const d = new Date(value);
     if (!Number.isNaN(d.getTime())) return d.toISOString();
@@ -129,20 +129,16 @@ function toIsoDate(value) {
 // cron invocation and starve every feed queued behind it.
 const FEED_TIMEOUT_MS = 10000;
 
-// Fetch one feed URL and return {title, siteUrl, items[]}.
-// Throws on HTTP errors, a timeout, or an unrecognized document — the caller
-// records the message in feeds.last_error so the sidebar shows a warning on
-// that feed.
-async function fetchAndParseFeed(url) {
-  const res = await fetch(url, {
-    headers: { 'User-Agent': 'PersonalRSSReader/1.0 (+self-hosted)' },
-    // cacheTtl 0 — bypass Cloudflare's edge cache. Without it a poll can be
-    // served a stale copy and we would miss items published minutes ago.
-    cf: { cacheTtl: 0 },
-    signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const xml = await res.text();
+// Turn feed XML into {title, siteUrl, items[]}.
+//
+// Deliberately separate from fetchAndParseFeed below: this half is pure — a
+// string in, a plain object out, no network — which is what makes it testable
+// against saved fixtures in worker/test/. Parser regressions are otherwise
+// invisible, because a feed that fails to parse just silently never appears.
+//
+// Throws on an unrecognized document; the caller records the message in
+// feeds.last_error so the sidebar can show a warning on that feed.
+export function parseFeed(xml) {
   const data = parser.parse(xml);
 
   // Format sniffing: the three feed dialects have distinct root elements.
@@ -184,6 +180,20 @@ async function fetchAndParseFeed(url) {
   }
 
   throw new Error('Unrecognized feed format');
+}
+
+// Fetch one feed URL and hand the body to parseFeed.
+// Throws on HTTP errors and timeouts as well as unparseable documents.
+async function fetchAndParseFeed(url) {
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'PersonalRSSReader/1.0 (+self-hosted)' },
+    // cacheTtl 0 — bypass Cloudflare's edge cache. Without it a poll can be
+    // served a stale copy and we would miss items published minutes ago.
+    cf: { cacheTtl: 0 },
+    signal: AbortSignal.timeout(FEED_TIMEOUT_MS),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return parseFeed(await res.text());
 }
 
 // The core job. Walks every subscribed feed serially, updates the feed row,

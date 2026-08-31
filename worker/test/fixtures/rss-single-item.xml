@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-written fixture (not a captured feed). Exercises the case where a
+     channel holds exactly one <item>: fast-xml-parser returns an object
+     rather than an array, so anything assuming an array breaks on it. -->
+<rss version="2.0">
+  <channel>
+    <title>Single Item Blog</title>
+    <link>https://example.com</link>
+    <item>
+      <title>The only post</title>
+      <link>https://example.com/only</link>
+      <guid isPermaLink="false">only-post-0001</guid>
+      <pubDate>Tue, 01 Jul 2025 09:30:00 GMT</pubDate>
+      <description>&lt;p&gt;Body with &lt;b&gt;escaped&lt;/b&gt; markup.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

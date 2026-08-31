@@ -1,0 +1,9 @@
+{
+  "name": "rss-reader-pages",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend and /api/* Pages Functions. No dependencies by design; tests use node's built-in runner.",
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\""
+  }
+}
