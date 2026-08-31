@@ -30,7 +30,14 @@
     view: { type: 'all' }, // {type: 'all'|'starred'|'feed'|'folder', id?}
     selected: -1,
     query: '',
+    hasMore: false,   // another page is probably available
+    loadingMore: false,
   };
+
+  // Items are fetched a page at a time. /api/items caps limit at 200 and
+  // defaults to 80; the value is sent explicitly so the UI and the API agree
+  // on the page size rather than the UI inferring it from a server default.
+  const PAGE_SIZE = 80;
 
   const layoutEl = $('.layout');
   const statusMsg = $('#statusMsg');
@@ -85,16 +92,62 @@
   // /api/items endpoint with different params (see that route's comments).
   // Resets the selection to the first item, so the reading pane always shows
   // something after a view change.
-  async function loadItems() {
+  // The filter half of an /api/items query — everything except paging.
+  // Shared so that loading page 2 cannot drift from page 1's filters.
+  function itemParams() {
     const params = new URLSearchParams();
     if (state.view.type === 'feed') params.set('feed_id', state.view.id);
     if (state.view.type === 'folder') params.set('folder_id', state.view.id);
     if (state.view.type === 'starred') params.set('starred', '1');
     if (state.query) params.set('q', state.query);
-    state.items = await api('/api/items?' + params.toString());
-    state.selected = state.items.length ? 0 : -1;
+    params.set('limit', String(PAGE_SIZE));
+    return params;
+  }
+
+  async function loadItems() {
+    const params = itemParams();
+    params.set('offset', '0');
+    const rows = await api('/api/items?' + params.toString());
+    state.items = rows;
+    // A full page back means there is probably another one. It may be wrong
+    // when the total is an exact multiple of PAGE_SIZE — the next fetch then
+    // returns nothing and the control disappears, which is a better failure
+    // than a COUNT(*) on every view change.
+    state.hasMore = rows.length === PAGE_SIZE;
+    state.selected = rows.length ? 0 : -1;
     renderItems();
     renderReading();
+    $('#items').scrollTop = 0; // a new view starts at the top
+  }
+
+  // Append the next page. Everything already loaded stays put, so the
+  // selected index remains valid.
+  async function loadMore() {
+    if (state.loadingMore || !state.hasMore) return;
+    state.loadingMore = true;
+    renderItems();
+    try {
+      const params = itemParams();
+      params.set('offset', String(state.items.length));
+      const rows = await api('/api/items?' + params.toString());
+
+      // Offset paging assumes a stable result set, and the poller can insert
+      // items between pages — which shifts everything down and would repeat a
+      // row across the boundary. Dropping ids already held makes that
+      // harmless. (An item pushed *past* the boundary by an insert is missed
+      // until the next view change; the alternative is keyset paging, which
+      // would mean changing the API.)
+      const seen = new Set(state.items.map((i) => i.id));
+      const fresh = rows.filter((r) => !seen.has(r.id));
+      state.items.push(...fresh);
+      state.hasMore = rows.length === PAGE_SIZE;
+      if (!fresh.length && !state.hasMore) say('No older items');
+    } catch {
+      say('Could not load older items');
+    } finally {
+      state.loadingMore = false;
+      renderItems();
+    }
   }
 
   // ---------- Sidebar ----------
@@ -223,6 +276,11 @@
   // script injection from whatever site you subscribed to.
   function renderItems() {
     const list = $('#items');
+    // Every render rebuilds the list, which resets the scroll position. That
+    // is wrong for anything but a view change: appending a page, or simply
+    // moving the selection with j/k, would otherwise yank you back to the
+    // top. loadItems() explicitly zeroes it for genuinely new views.
+    const scrollTop = list.scrollTop;
     list.innerHTML = '';
     $('#itemsEmpty').hidden = state.items.length > 0;
 
@@ -242,6 +300,19 @@
       row.addEventListener('click', () => selectItem(idx));
       list.appendChild(row);
     });
+
+    // Paging control lives inside the scrolling list so it sits under the
+    // last row rather than being pinned to the panel.
+    if (state.hasMore) {
+      const more = document.createElement('button');
+      more.className = 'load-more';
+      more.textContent = state.loadingMore ? 'Loading…' : 'Load older items';
+      more.disabled = state.loadingMore;
+      more.addEventListener('click', loadMore);
+      list.appendChild(more);
+    }
+
+    list.scrollTop = scrollTop;
   }
 
   // Selecting an article also marks it read (the standard reader behaviour)
@@ -465,7 +536,14 @@
     switch (e.key) {
       case 'j': case 'ArrowDown':
         e.preventDefault();
-        if (state.selected < state.items.length - 1) selectItem(state.selected + 1);
+        if (state.selected < state.items.length - 1) {
+          selectItem(state.selected + 1);
+        } else if (state.hasMore) {
+          // At the bottom of a page, j pulls the next one and keeps going, so
+          // reading straight through never requires reaching for the mouse.
+          const from = state.selected;
+          loadMore().then(() => { if (state.selected === from && from < state.items.length - 1) selectItem(from + 1); });
+        }
         break;
       case 'k': case 'ArrowUp':
         e.preventDefault();
