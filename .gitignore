@@ -1,0 +1,5 @@
+# Wrangler creates this wherever it is run from, including the repo
+# root (worker/.gitignore only covers worker/.wrangler).
+.wrangler/
+node_modules/
+.dev.vars
