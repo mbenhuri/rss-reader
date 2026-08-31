@@ -35,12 +35,19 @@
   const layoutEl = $('.layout');
   const statusMsg = $('#statusMsg');
 
-  // Transient status line message (bottom right). Self-clears after 3s, but
-  // only if nothing else has been said in the meantime — otherwise a stale
-  // timer would wipe a newer message.
-  function say(msg) {
+  // Status line message (bottom right). Self-clears after 3s, but only if
+  // nothing else has been said in the meantime — otherwise a stale timer would
+  // wipe a newer message.
+  //
+  // Pass {sticky: true} for "work is in progress" messages: an operation that
+  // outlives the 3s timer (a feed poll routinely does) would otherwise clear
+  // its own status while still running and look like nothing happened. A
+  // sticky message stays until the next say() replaces it.
+  function say(msg, { sticky = false } = {}) {
     statusMsg.textContent = msg;
-    if (msg) setTimeout(() => { if (statusMsg.textContent === msg) statusMsg.textContent = ''; }, 3000);
+    if (msg && !sticky) {
+      setTimeout(() => { if (statusMsg.textContent === msg) statusMsg.textContent = ''; }, 3000);
+    }
   }
 
   // Thin fetch wrapper for /api/*. Sets the JSON content type only when there
@@ -328,26 +335,76 @@
     await loadAll();
   }
 
+  // Tracks an in-flight poll so a second click (or the `r` key) can't stack
+  // concurrent polls on top of each other.
+  let refreshing = false;
+
+  // Drive the Refresh button's busy state: spinner on, label swapped, button
+  // disabled. Kept in one place so every early return in refreshFeeds() can
+  // hand control back with a single call.
+  function setRefreshBusy(busy) {
+    refreshing = busy;
+    const btn = $('#refreshBtn');
+    btn.classList.toggle('is-busy', busy);
+    btn.disabled = busy;
+    btn.setAttribute('aria-busy', String(busy));
+    $('#refreshBtnLabel').textContent = busy ? 'Checking…' : '↻ Refresh';
+  }
+
   // Manual poll. This is the one request that does NOT go through api():
   // it targets the separate poller worker on a different origin, using the URL
   // and optional secret the user pasted into the Settings modal (kept in
   // localStorage, never in the repo). Cross-origin, so the worker has to send
   // CORS headers — see corsHeaders() in worker/src/index.js.
+  //
+  // A poll takes as long as the slowest feed (each is capped at 10s in the
+  // worker), so this can easily run for many seconds. Everything below exists
+  // to make that legible: without it the button looks inert and people click
+  // it repeatedly.
   async function refreshFeeds() {
+    if (refreshing) return;
+
     const url = localStorage.getItem('rss_worker_url');
-    if (!url) { $('#settingsModal').showModal(); return; }
-    say('Checking feeds…');
+    if (!url) {
+      say('Set the poller worker URL to enable refresh');
+      $('#settingsModal').showModal();
+      return;
+    }
+
+    setRefreshBusy(true);
+    say('Checking feeds…', { sticky: true });
     try {
       const secret = localStorage.getItem('rss_worker_secret');
       const res = await fetch(url, {
         method: 'POST',
         headers: secret ? { Authorization: `Bearer ${secret}` } : {},
       });
+
+      // Previously unchecked: a 401 fell through to res.json(), which threw a
+      // parse error and got reported as "check the worker URL" — sending you
+      // to fix the one setting that was already correct.
+      if (!res.ok) {
+        say(res.status === 401
+          ? 'Refresh rejected — wrong or missing secret in Settings'
+          : `Refresh failed — worker returned ${res.status}`);
+        return;
+      }
+
       const summary = await res.json();
-      say(`Checked ${summary.checked} feeds, ${summary.newItems} new`);
+      const bits = [`Checked ${summary.checked} feed${summary.checked === 1 ? '' : 's'}`];
+      bits.push(summary.newItems ? `${summary.newItems} new` : 'nothing new');
+      // Surface poll failures here rather than leaving them to be discovered
+      // by hovering a feed in the sidebar.
+      if (summary.errors) bits.push(`${summary.errors} failed`);
+      say(bits.join(', '));
+
       await loadAll();
     } catch {
+      // fetch() itself rejected: bad URL, worker down, DNS, or a missing CORS
+      // header on the worker's response.
       say('Refresh failed — check the worker URL in Settings');
+    } finally {
+      setRefreshBusy(false);
     }
   }
 

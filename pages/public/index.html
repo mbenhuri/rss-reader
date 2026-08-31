@@ -16,7 +16,9 @@
         <input type="search" id="searchInput" placeholder="Search  /" autocomplete="off" />
       </div>
       <div class="topbar-actions">
-        <button class="btn" id="refreshBtn" title="Check feeds now (r)">↻ Refresh</button>
+        <button class="btn" id="refreshBtn" title="Check feeds now (r)">
+          <span class="spinner" aria-hidden="true"></span><span class="btn-label" id="refreshBtnLabel">↻ Refresh</span>
+        </button>
         <button class="btn" id="settingsBtn" title="Settings">⚙</button>
       </div>
     </header>
@@ -95,7 +97,7 @@
       <span><kbd>v</kbd> open original</span>
       <span><kbd>r</kbd> refresh</span>
       <span><kbd>/</kbd> search</span>
-      <span class="status-msg" id="statusMsg"></span>
+      <span class="status-msg" id="statusMsg" role="status" aria-live="polite"></span>
     </footer>
   </div>
 

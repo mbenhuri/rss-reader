@@ -102,6 +102,31 @@ html, body {
   color: var(--paper-raised);
 }
 .btn-accent:hover { background: var(--accent-strong); }
+.btn:disabled { cursor: default; opacity: 0.7; }
+.btn:disabled:hover { border-color: var(--line); }
+
+/* Refresh button busy state. The button keeps its label and grows a spinner
+   to its left, so the topbar doesn't reflow while a poll is in flight. */
+.btn .btn-label { display: inline-block; }
+.btn .spinner { display: none; }
+.btn.is-busy .spinner {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Respect users who have asked for less motion: keep the busy indicator,
+   drop the rotation. */
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-busy .spinner { animation: none; border-top-color: var(--line); background: var(--accent); }
+}
 
 .text-btn {
   background: none;
