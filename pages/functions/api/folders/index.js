@@ -1,3 +1,13 @@
+// Routes: GET/POST /api/folders — the sidebar's folder list.
+// Cloudflare Pages Functions use file-based routing: this file's path under
+// pages/functions/ IS its URL. Each exported onRequest<Method> handles that
+// HTTP verb; anything not exported returns 405 automatically.
+// `context` gives you { env, request, params, waitUntil, next, data };
+// `env.DB` is the D1 binding — it must be named exactly DB in the Pages
+// project's settings or it arrives undefined and every query 500s.
+
+// GET /api/folders — sort_order first (reserved for manual ordering; nothing
+// sets it yet, so in practice this is an alphabetical, case-insensitive list).
 export async function onRequestGet(context) {
   const { env } = context;
   const { results } = await env.DB.prepare(
@@ -6,6 +16,8 @@ export async function onRequestGet(context) {
   return Response.json(results);
 }
 
+// POST /api/folders  { name } — create a folder. folders.name is UNIQUE, so
+// a duplicate name lands in the catch below as a 400.
 export async function onRequestPost(context) {
   const { env, request } = context;
   const body = await request.json().catch(() => ({}));

@@ -1,3 +1,18 @@
+// Route: PATCH /api/items/:id — toggle read / starred on one article.
+// Cloudflare Pages Functions use file-based routing: this file's path under
+// pages/functions/ IS its URL. Each exported onRequest<Method> handles that
+// HTTP verb; anything not exported returns 405 automatically.
+// `context` gives you { env, request, params, waitUntil, next, data };
+// `env.DB` is the D1 binding — it must be named exactly DB in the Pages
+// project's settings or it arrives undefined and every query 500s.
+
+// PATCH /api/items/:id  { is_read?, is_starred? } — the read and star
+// toggles. Same dynamic-SET pattern as feeds/[id].js: only keys present in
+// the body are touched, so marking read never disturbs the star and vice
+// versa. Values are coerced to 1/0 because SQLite has no boolean type.
+// The frontend updates its own state first and fires this call afterwards
+// (optimistic update), so a failure here shows a toast but leaves the UI
+// out of sync until the next reload.
 export async function onRequestPatch(context) {
   const { env, params, request } = context;
   const body = await request.json().catch(() => ({}));
