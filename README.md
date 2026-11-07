@@ -1,5 +1,10 @@
 # RSS Reader - a personal RSS reader on Cloudflare
 
+> **Status: wound down as of 2026-11-06 — not currently deployed.**
+> The poller worker and the Pages project have been deleted; the D1 database
+> and its 9,885 items were kept. See [section 7](#7-wind-down-current-state-and-how-to-bring-it-back)
+> for what was removed and how to bring it back.
+
 A minimal, ad-free, keyboard-driven RSS/Atom reader. Runs entirely on
 Cloudflare's free tier:
 
@@ -151,46 +156,100 @@ Then the **↻ Refresh** button (or pressing `r`) triggers an immediate check.
 The button shows a spinner and reports what happened — how many feeds were
 checked, how many items are new, and how many failed.
 
-## 7. Taking it down, and bringing it back
+## 7. Wind-down (current state), and how to bring it back
 
-The deployment is disposable; this repo is the source of truth. Everything
-needed to stand it up again is committed — `schema.sql`, `worker/wrangler.toml`
-(cron schedule and the `DB` binding), both halves of the app, and the deploy
-steps above.
+**This project is currently wound down.** It was taken offline on
+2026-11-06. Sections 1–6 above describe a live deployment and are still the
+instructions to follow — they just don't describe anything that is running
+right now.
 
-To take it down while keeping the option to return:
+### What was removed
+
+| Resource | Name | State |
+| --- | --- | --- |
+| Poller worker + Cron Trigger | `rss-reader-poller` | **Deleted.** Nothing is polling. |
+| Pages project | `rss-reader` (was `rss-reader-1pk.pages.dev`) | **Deleted.** The URL no longer resolves. |
+| `REFRESH_SECRET` | — | Gone with the worker; secrets live on the worker, not in the repo. |
+
+The commands used were `wrangler delete --name rss-reader-poller` and
+`wrangler pages project delete rss-reader`.
+
+### What is still there
+
+The **D1 database `rss-reader` was deliberately kept**, with
+`database_id = 9b91e1cb-53fd-4035-84ce-97b69b9c0097` — the same id already
+in `worker/wrangler.toml`, so that file needs no edit to redeploy. At
+wind-down it held **6 feeds and 9,885 items** (~25 MB), including read and
+starred state.
+
+It is kept because an idle D1 database costs nothing on the free tier and it
+is the only copy of the article history and read-state. Nothing can reach it
+now that both deployments are gone — it is reachable only via `wrangler`
+from a logged-in machine.
+
+A snapshot of just the subscriptions is committed as
+[`subscriptions.opml`](subscriptions.opml), exported from D1 at wind-down in
+the same format `/api/opml` produces. That is the belt-and-braces copy: it
+survives even if the database is later deleted, and it restores the feed
+list in one import. It does **not** contain articles or read-state.
+
+Verify the database is still intact at any time with:
 
 ```bash
-# Save your subscriptions first — this is the only thing not in git.
-# Either click Export OPML at the bottom of the sidebar, or read it out of D1:
-cd worker && wrangler d1 execute rss-reader --remote --json \
-  --command "SELECT f.url, f.title, f.site_url, fo.name AS folder_name
-             FROM feeds f LEFT JOIN folders fo ON fo.id = f.folder_id
-             ORDER BY fo.name, f.title COLLATE NOCASE"
-
-# Stop the polling and remove both deployments.
-cd worker && wrangler delete                 # the poller worker + its cron
-wrangler pages project delete <project-name> # the Pages project
+cd worker && wrangler d1 execute rss-reader --remote \
+  --command "SELECT (SELECT COUNT(*) FROM feeds) AS feeds, (SELECT COUNT(*) FROM items) AS items"
 ```
 
-Keeping the D1 database costs nothing on the free tier and preserves every
-feed, item and read-state, so leave it unless you want the data gone. If you
-do delete it, `wrangler d1 delete rss-reader` is irreversible.
+### Deleting the database too, if you decide to
 
-Bringing it back means re-running sections 2–6, with three differences:
+This is **irreversible** and discards the article history and read-state.
+Make sure `subscriptions.opml` is current first (it is, as of wind-down), as
+it will be the only remaining record of what you subscribed to:
 
-- **The D1 `database_id` changes** if you recreated the database. Paste the new
-  one into `worker/wrangler.toml` and re-add the binding named `DB` to the
-  Pages project.
-- **`REFRESH_SECRET` is not in the repo.** Set it again with
-  `wrangler secret put REFRESH_SECRET` and paste it into Settings.
-- **Re-import your OPML** with the sidebar’s Import OPML button if you recreated the
-  database. Articles are not restored — the poller refills them on its next
-  run, and read-state starts clean.
+```bash
+cd worker && wrangler d1 delete rss-reader
+```
 
-Reconnecting the Pages Git integration re-enables push-to-deploy; remember
-that dashboard-added bindings only apply to *future* deployments, so add the
-`DB` binding before the first push rather than after.
+### Bringing it back
+
+With the database still in place, redeploying is sections 2–6 **minus
+section 2** — skip creating the database and applying `schema.sql`, since
+both already exist. Your 9,885 items and read-state come back with it.
+
+1. **Recreate the Pages project** (section 4). Framework preset `None`,
+   build command empty, build output directory `public`, root directory
+   `pages`. Reconnect the Git integration to re-enable push-to-deploy.
+2. **Add the D1 binding before the first deployment.** The variable name
+   must be exactly `DB`, pointing at the `rss-reader` database. Dashboard-added
+   bindings only apply to *future* deployments, so adding it after the first
+   push means an empty `env.DB` and vague 400/500s from `/api/*` until you
+   redeploy.
+3. **Redeploy the poller worker**: `cd worker && wrangler deploy`. The cron
+   schedule and the `DB` binding are already in `worker/wrangler.toml`.
+4. **Re-set the refresh secret**: `wrangler secret put REFRESH_SECRET`, then
+   paste the same value into the app's ⚙ Settings along with the worker's new
+   `https://rss-reader-poller.<subdomain>.workers.dev/refresh` URL. The
+   `/refresh` path is required — the worker answers every other path with a
+   200, so a URL missing it looks like it worked while polling nothing.
+5. **Put Cloudflare Access back in front of it** (section 5). The new Pages
+   project will get a *different* random `*.pages.dev` subdomain, so the old
+   Access application — which was scoped to `*.rss-reader.pages.dev` — won't
+   match and should be deleted and recreated.
+
+If you recreated the database as well, do section 2 first, paste the new
+`database_id` into `worker/wrangler.toml`, and import
+`subscriptions.opml` with the sidebar's **Import OPML** button. Articles are
+not restored that way — the poller refills them from each feed's current
+contents on its next run, and read-state starts clean.
+
+### Loose ends from the wind-down
+
+Neither of these is a `wrangler` operation, and both are harmless if left:
+
+- The **Cloudflare Access application** scoped to `*.rss-reader.pages.dev`
+  is now orphaned in Zero Trust and can be deleted there.
+- The **Pages deploy key** that the Git integration added to the GitHub repo
+  is still on the repo's side (Settings → Deploy keys).
 
 ## Themes
 
