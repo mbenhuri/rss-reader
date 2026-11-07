@@ -3,6 +3,25 @@
 A minimal, ad-free, keyboard-driven RSS/Atom reader. No frameworks, no
 build step for the frontend. Runs entirely on Cloudflare's free tier.
 
+## Deployment status — wound down 2026-11-06
+
+**Nothing is currently deployed.** The `rss-reader-poller` worker and the
+`rss-reader` Pages project were deleted on 2026-11-06. Consequences for any
+work in this repo:
+
+- **Pushing to `main` does not deploy anything.** The Pages project and its
+  Git integration are gone, so the "push to `main` → auto-deploys" behaviour
+  described below is dormant until the project is recreated.
+- **`wrangler deploy` from `worker/` will recreate the worker.** Don't run it
+  casually — it brings the cron poller back to life.
+- **The D1 database `rss-reader` still exists and still has the data** (6
+  feeds, 9,885 items at wind-down), at the `database_id` already in
+  `worker/wrangler.toml`. Queries via `wrangler d1 execute` still work.
+- **`REFRESH_SECRET` is unset**, having been deleted along with the worker.
+
+Redeploy steps and the full wind-down record are in the README's section 7.
+Everything below describes the architecture as designed, which is unchanged.
+
 ## Architecture
 
 Two separately-deployed pieces sharing one D1 database:
