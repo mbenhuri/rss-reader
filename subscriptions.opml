@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+<head><title>RSS Subscriptions</title></head>
+<body>
+  <outline type="rss" text="ArchDaily Global" title="ArchDaily Global" xmlUrl="http://feeds.feedburner.com/Archdaily" htmlUrl="https://www.archdaily.com/"/>
+  <outline type="rss" text="Cloudflare Blog" title="Cloudflare Blog" xmlUrl="https://blog.cloudflare.com/rss" htmlUrl="https://blog.cloudflare.com/"/>
+  <outline type="rss" text="crazypeople.online - All" title="crazypeople.online - All" xmlUrl="https://crazypeople.online/feeds/all.xml?sort=Active" htmlUrl="https://crazypeople.online"/>
+  <outline type="rss" text="Dateline NBC" title="Dateline NBC" xmlUrl="https://podcastfeeds.nbcnews.com/dateline-nbc" htmlUrl="https://www.nbcnews.com/dateline"/>
+  <outline type="rss" text="Slashdot" title="Slashdot" xmlUrl="https://rss.slashdot.org/Slashdot/slashdotMain" htmlUrl="https://slashdot.org/"/>
+  <outline type="rss" text="Vegan Home Cooks" title="Vegan Home Cooks" xmlUrl="https://veganhomecooks.online/index.xml" htmlUrl="https://veganhomecooks.online/"/>
+</body>
+</opml>
