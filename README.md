@@ -151,6 +151,47 @@ Then the **↻ Refresh** button (or pressing `r`) triggers an immediate check.
 The button shows a spinner and reports what happened — how many feeds were
 checked, how many items are new, and how many failed.
 
+## 7. Taking it down, and bringing it back
+
+The deployment is disposable; this repo is the source of truth. Everything
+needed to stand it up again is committed — `schema.sql`, `worker/wrangler.toml`
+(cron schedule and the `DB` binding), both halves of the app, and the deploy
+steps above.
+
+To take it down while keeping the option to return:
+
+```bash
+# Save your subscriptions first — this is the only thing not in git.
+# Either click Export OPML at the bottom of the sidebar, or read it out of D1:
+cd worker && wrangler d1 execute rss-reader --remote --json \
+  --command "SELECT f.url, f.title, f.site_url, fo.name AS folder_name
+             FROM feeds f LEFT JOIN folders fo ON fo.id = f.folder_id
+             ORDER BY fo.name, f.title COLLATE NOCASE"
+
+# Stop the polling and remove both deployments.
+cd worker && wrangler delete                 # the poller worker + its cron
+wrangler pages project delete <project-name> # the Pages project
+```
+
+Keeping the D1 database costs nothing on the free tier and preserves every
+feed, item and read-state, so leave it unless you want the data gone. If you
+do delete it, `wrangler d1 delete rss-reader` is irreversible.
+
+Bringing it back means re-running sections 2–6, with three differences:
+
+- **The D1 `database_id` changes** if you recreated the database. Paste the new
+  one into `worker/wrangler.toml` and re-add the binding named `DB` to the
+  Pages project.
+- **`REFRESH_SECRET` is not in the repo.** Set it again with
+  `wrangler secret put REFRESH_SECRET` and paste it into Settings.
+- **Re-import your OPML** with the sidebar’s Import OPML button if you recreated the
+  database. Articles are not restored — the poller refills them on its next
+  run, and read-state starts clean.
+
+Reconnecting the Pages Git integration re-enables push-to-deploy; remember
+that dashboard-added bindings only apply to *future* deployments, so add the
+`DB` binding before the first push rather than after.
+
 ## Themes
 
 **⚙ Settings → Theme** switches the look. Three ship with the app:
